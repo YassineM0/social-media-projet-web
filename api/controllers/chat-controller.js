@@ -1,5 +1,5 @@
 const Chat = require("../models/chatModel");
-const {User} = require("../models/user");
+const { User } = require("../models/user");
 
 exports.accessChat = async (req, res) => {
   const { userId } = req.body; // "userId" is another user who I had or I will have chat with him
@@ -118,4 +118,58 @@ exports.renameGroup = async (req, res) => {
 
   if (!result) return res.status(404).send("No Group Ghat is Found");
   else res.status(200).json(result);
+};
+
+exports.addUserToGroup = async (req, res) => {
+  const { userId, chatId } = req.body;
+  if (!userId || !chatId) return res.status(400).send("Please Fill all Fields");
+
+  const chat = await Chat.findById(chatId).populate("groupAdmin", "-password");
+
+  if (!chat) return res.status(400).send("Chat is Not Found");
+
+  if (chat.groupAdmin._id != req.auth._id)
+    return res.status(400).send("You Are Not Allowed, Only For Admin");
+
+  const updatedChat = await Chat.findOneAndUpdate(
+    { _id: chatId },
+    {
+      $push: {
+        users: userId,
+      },
+    },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!updatedChat) return res.status(400).send("Chat Not Found");
+  else res.status(200).send(updatedChat);
+};
+
+exports.removeFromGroup = async (req, res) => {
+  const { userId, chatId } = req.body;
+  if (!userId || !chatId) return res.status(400).send("Please Fill all Fields");
+
+  const chat = await Chat.findById(chatId).populate("groupAdmin", "-password");
+
+  if (!chat) return res.status(400).send("Chat is Not Found");
+
+  if (chat.groupAdmin._id != req.auth._id)
+    return res.status(400).send("You Are Not Allowed, Only For Admin");
+
+  const removed = await Chat.findOneAndUpdate(
+    { _id: chatId },
+    {
+      $pull: {
+        users: userId,
+      },
+    },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!removed) return res.status(400).send("Chat Not Found");
+  else res.status(200).send(removed);
 };

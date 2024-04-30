@@ -13,6 +13,8 @@ const userRoutes = require("./routers/user-routes.js");
 const authRoutes = require("./routers/authentication-routes.js");
 const postsRoutes = require("./routers/post-routes.js");
 const chatRoute = require("./routers/chat-routes")
+const messageRoute = require("./routers/message-routes");
+
 // connection to DB
 connectToDB();
 
@@ -35,11 +37,13 @@ app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 app.use("/api/chat", chatRoute);
+app.use("/api/message", messageRoute);
 
 
-// // Error handler middlewares
-// app.use(notFound);
-// app.use(errorHandler);
+
+// Error handler middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 // create server
 const PORT = process.env.PORT || 8000 ;
