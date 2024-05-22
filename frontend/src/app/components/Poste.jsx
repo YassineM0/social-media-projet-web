@@ -158,7 +158,7 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           <button
-            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd"
+            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
             onClick={handleSave}
           >
             Save
@@ -206,7 +206,7 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <button onClick={handleAddComment} className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd">Comment</button>
+          <button onClick={handleAddComment} className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500">Comment</button>
         </div>
       </div>
     </div>

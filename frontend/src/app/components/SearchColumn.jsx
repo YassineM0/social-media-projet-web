@@ -29,7 +29,7 @@ const SearchRow = () => {
       </div>
       <div className="flex align-items border-3 border-gray2 p-1.15 mt-1 h-10 bg-white rounded-mdd">
         <img src="Search.png" size={25} className="mr-1 ml-0.5" />
-        <input type="" className="w-4.25 px-1" placeholder="search ..." />
+        <input type="" className="w-4.25 px-1 focus:outline-none" placeholder="search ..." />
       </div>
       <div className="mt-0.7 py-1 border-3 border-gray2 bg-white rounded-mdd px-2.15">
         <h2 className="text-183153 font-bold pb-1.5 pt-2">
