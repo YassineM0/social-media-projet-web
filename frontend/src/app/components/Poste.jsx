@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CiMenuKebab } from "react-icons/ci";
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../context/authContext"; 
+
 
 const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
   const { token, userId } = useAuthContext();
@@ -117,27 +118,29 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
   };
 
   return (
-    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-8.5">
-      <div className="flex flex-row pt-2 pl-2">
-        <img src={profilePic} alt="" className="w-1.25 rounded-lg mr-1.25" />
-        <h6 className="text-base font-semibold">{name}</h6>
-        <div className="menu-container relative inline-block" ref={menuRef}>
+    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-10 overflow-hidden">
+      <div className="flex flex-row pt-1 pb-1 pl-2 bg-gray2 flex justify-between  items-center">
+        <div className="flex items-center">
+          <img src={profilePic} alt="" className="w-1.25 h-1.25 rounded-lg bg-blue mr-1" />
+          <h6 className="text-base font-semibold">{name}</h6>
+        </div>
+        <div className="menu-container relative inline-block mr-1" ref={menuRef}>
           <button
-            className="ml-8 text-2xl focus:outline-none"
+            className="text-2xl focus:outline-none"
             onClick={toggleMenu}
           >
-            <CiMenuKebab size={25} />
+            <CiMenuKebab  size={25} />
           </button>
           {isOpen && (
-            <ul className="menu absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+            <ul className="menu absolute right-0 mt-1.25 w-68 bg-white border-3 border-gray2 rounded-mdd shadow-lg z-10">
               <li
-                className="menu-item px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
                 onClick={handleModify}
               >
                 Modify
               </li>
               <li
-                className="menu-item px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
                 onClick={handleDelete}
               >
                 Delete
@@ -148,29 +151,30 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
       </div>
 
       {isEditing ? (
-        <div className="flex flex-col p-2">
+        <div className="flex p-2 items-center">
           <textarea
-            className="border p-2 w-full rounded"
+            className="border p-2 mr-1 w-full rounded focus:outline-none focus:ring focus:border-blue-300"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <button
-            className="mt-2 bg-blue-500 py-1 px-4  text-black rounded"
+            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd"
             onClick={handleSave}
           >
             Save
           </button>
         </div>
       ) : (
-        <p className="pl-2 pt-1 pb-2">{description}</p>
+        <p className="pl-2 pt-2 pb-1">{description}</p>
       )}
-
-      <img
-        src={imageSrc}
-        alt=""
-        className="w-8 h-5 m-auto rounded-mdd border-b-2 mb-1.25"
-      />
-      <div className="flex flex-row items-center justify-between m-auto mb-1 w-8">
+      <div className="w-9 h-auto m-auto rounded-mdd border-b-2 mb-1.25">
+        <img
+          src={imageSrc}
+          alt=""
+          className=""
+        />
+      </div>
+      <div className="flex flex-row items-center justify-between m-auto mb-1 w-9">
         <div className="flex items-center">
           <button>
             <img src="/Add.png" width={20} height={20} className="mr-1" />
@@ -192,19 +196,18 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <div className="flex flex-row pl-2 mb-1.5">
-          <img src={profilePic} alt="" className="w-1 rounded-lg mr-1.25" />
+      <div className="flex flex-col w-9">
+        <div className="flex flex-row pl-2 mb-1 flex justify-between">
+          <img src={profilePic} alt="" className="w-1 h-1 rounded-lg mr-0.5 bg-blue object-center" />
           <input
             type="text"
-            className="bg-silver rounded-md pr-4 mx-1.25 px-5"
-            placeholder="What's on your mind?"
+            className="bg-silver  rounded-mdd pr-3  px-6 h-1 focus:outline-none focus:ring focus:border-blue-300"
+            placeholder="Add your Comment!"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <button onClick={handleAddComment}>Post</button>
+          <button onClick={handleAddComment} className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd">Comment</button>
         </div>
-        <p>{comment}</p>
       </div>
     </div>
   );

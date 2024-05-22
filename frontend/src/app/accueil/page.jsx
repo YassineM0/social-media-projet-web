@@ -10,22 +10,22 @@ import LastColumn from "../components/LastColumn";
 const Page = () => {
   return (
     <div
-      className="bg-cover bg-center bg-gray3 h-screen flex"
+      className="bg-cover bg-center h-screen flex"
       style={{ backgroundImage: "url('zlijj.png')" }}
     >
-      <div className="w-3 fixed top-0 h-screen">
+      <div className="w-3 fixed top-0 h-screen ">
         <SideBar />
       </div>
-      <div className="flex-1 ml-3 overflow-y-auto ">
+      <div className=" ml-3 overflow-y-auto grid-cols-1 w-screen">
         <div className="flex flex-row h-full">
-          <div className="w-1/4">
-            <SearchColumn />
+          <div className="w-1/4 fixed z-50">
+              <SearchColumn className="" />
           </div>
-          <div className="w-1/2 ml-3">
+          <div className="w-1/2 flex justify-center m-auto translate-x-0.7">
             <Feed />
           </div>
-          <div className="w-1/4 flex flex-col">
-            <LastColumn />
+          <div className="w-1/5 flex flex-col items-center fixed right-1  ">
+            <LastColumn className="" />
             <Profile />
           </div>
         </div>
