@@ -43,6 +43,10 @@ const register = asyncHandler(async (req, res) => {
     ContentType = ""
   }
 
+  //defaultBackground
+  let defaultBackground = await fs.promises.readFile("./images/defaultBackground.png");
+
+
   user = new User({
     email: req.body.email,
     password: req.body.password,
@@ -51,6 +55,10 @@ const register = asyncHandler(async (req, res) => {
     profilePicture : { 
       data : Data, 
       contentType : ContentType,
+    },
+    backgroundPicture : { 
+      data : defaultBackground, 
+      contentType : "",
     },
     friends: req.body.friends,
     dateOfBirth: req.body.dateOfBirth,
