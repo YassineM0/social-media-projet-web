@@ -1,15 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { useAuthContext } from "../context/authContext";
+import CommentsComponent from "./CommentsComponent";
 
-const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
+const Poste = ({
+  postId,
+  name,
+  caption,
+  profilePic,
+  src,
+  likes,
+  commentList,
+}) => {
   const { token, userId } = useAuthContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(caption);
-  const [comments, setComments] = useState(comment || []);
+  const [comments, setComments] = useState(commentList || []);
   const [newComment, setNewComment] = useState("");
+  const [showComments, setShowComments] = useState(false);
 
   const menuRef = useRef(null);
 
@@ -66,7 +76,7 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
       console.error("Error updating the post:", error);
     }
   };
-  const commentss = ["pop"];
+
   const handleDelete = async () => {
     try {
       const response = await fetch(
@@ -101,7 +111,7 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ comment: newComment }), 
+          body: JSON.stringify({ comment: newComment }),
         }
       );
       if (!response.ok) {
@@ -114,6 +124,12 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
     } catch (error) {
       console.error("Error adding comment:", error);
     }
+  };
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
+  const handleCloseComments = () => {
+    setShowComments(false);
   };
 
   return (
@@ -182,7 +198,9 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
         <div className="flex flex-row items-center">
           <img src="/Comment.png" width={20} height={20} className="mr-1" />
           <div>
-            <p>0 commentss</p>
+            <button onClick={toggleComments}>
+              <p>{comments.length} comments</p>
+            </button>
           </div>
         </div>
         <div className="flex items-center">
@@ -204,7 +222,13 @@ const Poste = ({ postId, name, caption, profilePic, src, likes, comment }) => {
           />
           <button onClick={handleAddComment}>Post</button>
         </div>
-        <p>{comment}</p>
+
+        {showComments && (
+          <CommentsComponent
+            comments={commentList}
+            onClose={handleCloseComments}
+          />
+        )}
       </div>
     </div>
   );

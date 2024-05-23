@@ -9,13 +9,13 @@ const Feed = () => {
   const { userId } = useAuthContext();
   const { posts, fetchPosts } = usePostContext();
 
-  // useEffect(() => {
-  //   console.log(userId);
-  //   console.log(posts);
-  //   if (userId) {
-  //     fetchPosts(userId);
-  //   }
-  // }, [posts, userId]);
+  useEffect(() => {
+    console.log(userId);
+    console.log(posts);
+    if (userId) {
+      fetchPosts(userId);
+    }
+  }, [posts, userId]);
 
   return (
     <div className="flex flex-col">
@@ -30,7 +30,7 @@ const Feed = () => {
             src={post.postPicture}
             likes={Object.keys(post.likes).length}
             postId={post._id}
-            comments=""
+            commentList={post.comments}
             share=""
           />
         ))}
