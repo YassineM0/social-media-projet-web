@@ -21,7 +21,7 @@ const Page = () => {
   }, [profilePosts, userId]);
 
   return (
-    <div className="bg-cover bg-center bg-scroll bg-gray3 flex flex-col h-fit "  style={{backgroundImage: "url('zlijj.png')"}}>
+    <div className=" bg-center bg-scroll bg-gray3 flex flex-col h-fit "  style={{backgroundImage: "url('zlijj.png')"}}>
       <div className='flex '>
         <div className="w-5 sticky h-fit  top-0 ">
           <SideBar /> 
