@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../context/authContext";
+import { useToast } from "@chakra-ui/react";
 
 const PostFeature = () => {
   const { userId, token } = useAuthContext();
   const [image, selectedImage] = useState(null);
   const [description, setDescription] = useState("");
+  const toast = useToast();
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     selectedImage(file);
@@ -29,10 +31,25 @@ const PostFeature = () => {
       });
 
       if (response.ok) {
+        toast({
+          title: 'Post created.',
+          description: "Your post has been created successfully.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
         console.log("Post created successfully");
       } else {
+        toast({
+          title: 'Failed to create post.',
+          description: "There was an error creating your post.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
         console.error("Failed to create post");
       }
+  
     } catch (error) {
       console.error("Error creating post:", error);
     }
