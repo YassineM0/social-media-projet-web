@@ -9,7 +9,7 @@ const Profile = () => {
   const router = useRouter();
   const handleLogout = () => {
     logout();
-    router.push("/signin");
+    router.push("/");
   };
 
   return (

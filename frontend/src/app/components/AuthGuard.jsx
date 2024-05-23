@@ -5,12 +5,12 @@ import { useAuthContext } from "../context/authContext";
 
 const AuthGuard = (WrappedComponent) => {
   const Wrapper = (props) => {
-    const { userId } = useAuthContext();
+    const { userId, token } = useAuthContext();
     const router = useRouter();
 
     useEffect(() => {
-      if (!userId) {
-        router.push("/signin");
+      if (!userId || !token) {
+        router.push("/");
       }
     }, [userId, router]);
 

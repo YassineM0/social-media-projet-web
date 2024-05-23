@@ -30,7 +30,7 @@ const Feed = () => {
             src={post.postPicture}
             likes={Object.keys(post.likes).length}
             postId={post._id}
-            comments=""
+            commentList={post.comments}
             share=""
           />
         ))}
