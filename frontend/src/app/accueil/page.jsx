@@ -19,7 +19,7 @@ const Page = () => {
       <div className=" ml-3 overflow-y-auto grid-cols-1 w-screen">
         <div className="flex flex-row h-full">
           <div className="w-1/4 fixed z-50">
-              <SearchColumn className="" />
+            <SearchColumn className="" />
           </div>
           <div className="w-1/2 flex justify-center m-auto mt-0 translate-x-0.7">
             <Feed />
@@ -34,4 +34,4 @@ const Page = () => {
   );
 };
 
-export default AuthGuard(Page);
+export default Page;
