@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { CiMenuKebab } from "react-icons/ci";
-<<<<<<< HEAD
 import { useAuthContext } from "../context/authContext";
 import CommentsComponent from "./CommentsComponent";
-=======
-import { useAuthContext } from "../context/authContext"; 
-
->>>>>>> 101b0d0ab050ffe73f8f0bd3ab30df49b581ecc4
-
 const Poste = ({
   postId,
   name,
@@ -139,17 +133,21 @@ const Poste = ({
 
   return (
     <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-10 overflow-hidden">
-      <div className="flex flex-row pt-1 pb-1 pl-2 bg-gray2 flex justify-between  items-center">
+      <div className=" flex-row pt-1 pb-1 pl-2 bg-gray2 flex justify-between  items-center">
         <div className="flex items-center">
-          <img src={profilePic} alt="" className="w-1.25 h-1.25 rounded-lg bg-blue mr-1" />
+          <img
+            src={profilePic}
+            alt=""
+            className="w-1.25 h-1.25 rounded-lg bg-blue mr-1"
+          />
           <h6 className="text-base font-semibold">{name}</h6>
         </div>
-        <div className="menu-container relative inline-block mr-1" ref={menuRef}>
-          <button
-            className="text-2xl focus:outline-none"
-            onClick={toggleMenu}
-          >
-            <CiMenuKebab  size={25} />
+        <div
+          className="menu-container relative inline-block mr-1"
+          ref={menuRef}
+        >
+          <button className="text-2xl focus:outline-none" onClick={toggleMenu}>
+            <CiMenuKebab size={25} />
           </button>
           {isOpen && (
             <ul className="menu absolute right-0 mt-1.25 w-68 bg-white border-3 border-gray2 rounded-mdd shadow-lg z-10">
@@ -188,11 +186,7 @@ const Poste = ({
         <p className="pl-2 pt-2 pb-1">{description}</p>
       )}
       <div className="w-9 h-auto m-auto rounded-mdd border-b-2 mb-1.25">
-        <img
-          src={imageSrc}
-          alt=""
-          className=""
-        />
+        <img src={imageSrc} alt="" className="" />
       </div>
       <div className="flex flex-row items-center justify-between m-auto mb-1 w-9">
         <div className="flex items-center">
@@ -219,8 +213,12 @@ const Poste = ({
         </div>
       </div>
       <div className="flex flex-col w-9">
-        <div className="flex flex-row pl-2 mb-1 flex justify-between">
-          <img src={profilePic} alt="" className="w-1 h-1 rounded-lg mr-0.5 bg-blue object-center" />
+        <div className=" flex-row pl-2 mb-1 flex justify-between">
+          <img
+            src={profilePic}
+            alt=""
+            className="w-1 h-1 rounded-lg mr-0.5 bg-blue object-center"
+          />
           <input
             type="text"
             className="bg-silver  rounded-mdd pr-3  px-6 h-1 focus:outline-none focus:ring focus:border-blue-300"
@@ -228,18 +226,19 @@ const Poste = ({
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
           />
-          <button onClick={handleAddComment} className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500">Comment</button>
+          <button
+            onClick={handleAddComment}
+            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
+          >
+            Comment
+          </button>
         </div>
-<<<<<<< HEAD
-
         {showComments && (
           <CommentsComponent
             comments={commentList}
             onClose={handleCloseComments}
           />
         )}
-=======
->>>>>>> 101b0d0ab050ffe73f8f0bd3ab30df49b581ecc4
       </div>
     </div>
   );
