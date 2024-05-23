@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import Messages from "../components/Messages";
-import { BiSolidMessage } from "react-icons/bi";
+import Messages from "../components/Messages"; 
 
 const LastColumn = () => {
   const rec = [
@@ -24,7 +23,7 @@ const LastColumn = () => {
   ];
 
   return (
-    <div className="mt-2 py-1 bg-white border-3 border-gray2 rounded-mdd px-2.15 ml-3 mr-1.5 sticky top-0">
+    <div className="mt-1.5 w-5 py-1 bg-white border-3 border-gray2 rounded-mdd px-2.15">
       <div className="flex flex-row gap-3 items-center justify-between">
         <h2 className="text-183153 font-bold pb-1.5 pt-2">Messages</h2>
         <img src="message.png" width={30} height={30} />

@@ -18,8 +18,8 @@ const Feed = () => {
   }, [posts, userId]);
 
   return (
-    <div className="flex flex-col">
-      <PostFeature />
+    <div className="flex flex-col w-10">
+      <PostFeature/>
       <div className="">
         {posts.map((post) => (
           <Poste

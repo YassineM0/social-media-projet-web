@@ -8,7 +8,9 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
+        0.3: "0.4rem",
         0.5: "0.7rem",
+        0.7: "1.5rem",
         1: "2rem",
         1.25: "2.9rem",
         1.5: "3.4rem",
@@ -24,6 +26,7 @@ module.exports = {
         8: "33rem",
         8.5: "36rem",
         9: "40rem",
+        10 : "42rem",
         x: "40rem",
         xx: "50rem",
         z: "69.7rem",
@@ -156,6 +159,7 @@ module.exports = {
       },
       width: {
         95: "95%",
+        h : "1rem"
       },
     },
   },

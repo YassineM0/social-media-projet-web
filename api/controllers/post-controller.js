@@ -12,7 +12,7 @@ const fs = require('fs');
  * @access  Public
  */
 const getFeedPosts = asyncHandler( async (req,res) => {
-    const posts = await Post.find().populate("userId",["_id" ,"lastName"]).sort({ createdAt: -1 })
+    const posts = await Post.find().populate("userId").sort({ createdAt: -1 })
     res.status(200).json(posts);
     }
 )
@@ -25,7 +25,7 @@ const getFeedPosts = asyncHandler( async (req,res) => {
  */
 const getUserPosts = asyncHandler( async (req,res) => {
     const userId = req.params.userId;
-    const post = await Post.find({userId}).populate("userId",["_id" ,"lastName"])
+    const post = await Post.find({userId}).populate("userId")
     if (post){
         res.status(200).json(post)
     } else (
@@ -88,7 +88,7 @@ const addPost = asyncHandler( async (req,res) => {
  */
 const likePost = asyncHandler( async (req,res) => {
     const postId = req.params.postId;
-    const post = await Post.findById(postId).populate("userId",["_id" ,"email"])
+    const post = await Post.findById(postId).populate("userId")
     const postOwner = await User.findById(post.userId);
     const likerId =req.params.userId;
     const liker = await User.findById(likerId);
@@ -210,7 +210,7 @@ const updateComment = asyncHandler( async (req,res) => {
  * @access  Private (only admin & user himself)
  */
 const deletePostByPostId = asyncHandler( async (req,res) => {
-    const post = await Post.findById(req.params.postId).populate("userId",["_id" ,"lastName"])
+    const post = await Post.findById(req.params.postId).populate("userId")
     if (post){
         const postOwner=post.userId;
         await Post.findByIdAndDelete(req.params.postId)
@@ -240,7 +240,7 @@ const updatePostByPostId = asyncHandler( async (req,res) => {
         $set : {
             description : req.body.description,
         }
-    },{new : true}).populate("userId",["_id" ,"lastName"])
+    },{new : true}).populate("userId")
     res.status(200).json(updatedPost);
     } 
 )
