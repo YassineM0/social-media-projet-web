@@ -14,13 +14,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <ChakraProvider>
         <body className={inter.className}>
+      <ChakraProvider>
           <AuthProvider>
             <PostProvider>{children}</PostProvider>
           </AuthProvider>
-        </body>
       </ChakraProvider>
+        </body>
     </html>
   );
 }
