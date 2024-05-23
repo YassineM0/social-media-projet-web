@@ -21,7 +21,7 @@ const Page = () => {
           <div className="w-1/4 fixed z-50">
               <SearchColumn className="" />
           </div>
-          <div className="w-1/2 flex justify-center m-auto translate-x-0.7">
+          <div className="w-1/2 flex justify-center m-auto mt-0 translate-x-0.7">
             <Feed />
           </div>
           <div className="w-1/5 flex flex-col items-center fixed right-1  ">
