@@ -8,11 +8,10 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        0.3: "0.4rem",
         0.5: "0.7rem",
-        0.7: "1.5rem",
         1: "2rem",
         1.25: "2.9rem",
+        1.3: "3.1rem",
         1.5: "3.4rem",
         2: "4rem",
         3: "6rem",
@@ -21,12 +20,13 @@ module.exports = {
         4.25: "14rem",
         4.5: "16rem",
         5: "19rem",
+        5.25: "20rem",
+        5.5: "22rem",
         6: "23rem",
         7: "27rem",
         8: "33rem",
-        8.5: "36rem",
         9: "40rem",
-        10 : "42rem",
+        10: "46rem",
         x: "40rem",
         xx: "50rem",
         z: "69.7rem",
@@ -134,7 +134,6 @@ module.exports = {
         5: "12rem",
         6: "17rem",
         7: "21rem",
-        8: "24rem",
       },
       borderRadius: {
         none: "0",
@@ -159,7 +158,6 @@ module.exports = {
       },
       width: {
         95: "95%",
-        h : "1rem"
       },
     },
   },
