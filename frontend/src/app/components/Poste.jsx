@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { useAuthContext } from "../context/authContext";
 import CommentsComponent from "./CommentsComponent";
+import { useToast } from "@chakra-ui/react";
+
 const Poste = ({
   postId,
   name,
@@ -11,8 +13,8 @@ const Poste = ({
   likes,
   commentList,
 }) => {
+  const toast = useToast();
   const { token, userId } = useAuthContext();
-
   const [isOpen, setIsOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState(caption);
@@ -68,6 +70,16 @@ const Poste = ({
         throw new Error("Failed to update the post");
       }
 
+      if (response.ok){
+        toast({
+          title: 'Post has been Updated.',
+          description: "Your Post has been updated successfuly.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+
       const data = await response.json();
       setDescription(data.description);
       setIsEditing(false);
@@ -92,9 +104,19 @@ const Poste = ({
       if (!response.ok) {
         throw new Error("Failed to delete the post");
       }
+      if (response.ok){
+        toast({
+          title: 'Post has been deleted.',
+          description: "Your Post has been deleted successfuly.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
 
       if (onDelete) {
         onDelete(postId);
+        
       }
     } catch (error) {
       console.error("Error deleting the post:", error);
