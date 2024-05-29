@@ -10,8 +10,6 @@ const Feed = () => {
   const { posts, fetchPosts } = usePostContext();
 
   useEffect(() => {
-    console.log(userId);
-    console.log(posts);
     if (userId) {
       fetchPosts(userId);
     }

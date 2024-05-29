@@ -1,21 +1,22 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/navigation";
+
 const ChatContext = createContext();
 
 const ChatProvider = ({ children }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [chats, setChats] = useState([]);
   const [userInfo, setUserInfo] = useState();
-  const history = useHistory();
-
+  const router = useRouter(); 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("userInfo"));
     setUserInfo(data);
 
     if (!data) {
-      history.push("/signin"); 
+      router.push("/signin"); 
     }
-  }, [history]);
+  }, [router]);
 
   return (
     <ChatContext.Provider

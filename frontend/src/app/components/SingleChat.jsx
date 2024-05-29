@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import {
@@ -38,7 +40,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
 
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `http://localhost:4001/api/message/${selectedChat._id}`,
         config
       );
 
@@ -66,7 +68,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
 
         const { data } = await axios.post(
-          "/api/message",
+          "http://localhost:4001/api/message",
           {
             content: newMessage,
             chatId: selectedChat._id,

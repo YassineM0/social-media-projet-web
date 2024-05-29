@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
@@ -21,7 +23,12 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
       },
     };
     try {
-      const { data } = await axios.get("/api/chat", config);
+
+      const { data } = await axios.get(
+        "http://localhost:4001/api/chat",
+        config
+      );
+      console.log(data)
       setChats(data);
     } catch (error) {
       toast({
@@ -77,12 +84,13 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
         p={3}
         bg={"#F8F8F8"}
         w="100%"
-        h="100%"
-        borderRaduis="lg"
+        h={"100%"}
+        borderRadius="lg"
+        // overflowY="auto"
         overflowY="hidden"
       >
         {chats ? (
-          <Stack overflowY={"scroll"} maxHeight="420px">
+          <Stack overflowY={"auto"} maxHeight="420px">
             {chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}

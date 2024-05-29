@@ -14,7 +14,7 @@ exports.authorization = (err, req, res, next) => {
     return res.status(401).json({ message: 'Invalid or missing token' });
   }
   next(err);
-  if (req.params.id === req.auth.id || req.auth.isAdmin) {
+  if (req.params.id === req.auth._id || req.auth.isAdmin) {
     next();
   } else {
     return res.status(403).json({

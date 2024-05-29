@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../context/authContext";
 import Image from "next/image";
@@ -20,6 +20,8 @@ const page = () => {
         },
       });
       const data = await response.json();
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      
       if (response.ok) {
         login(data.user._id, data.token);
         router.push("/accueil");

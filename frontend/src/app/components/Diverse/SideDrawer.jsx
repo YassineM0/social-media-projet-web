@@ -1,9 +1,12 @@
+"use client";
+
 import React, { useState } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import {
   Box,
   Tooltip,
   Button,
+  Image,
   Text,
   Menu,
   MenuButton,
@@ -24,10 +27,10 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
+import { useRouter } from "next/navigation";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -38,12 +41,12 @@ const SideDrawer = () => {
   const { userInfo, chats, setChats, selectedChat, setSelectedChat } =
     ChatState();
   const { token, user } = userInfo;
-  const history = useHistory();
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const logout = () => {
     localStorage.removeItem("userInfo");
-    history.push("/");
+    router.push("/signin");
   };
 
   const toast = useToast();
@@ -64,11 +67,14 @@ const SideDrawer = () => {
 
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       };
 
-      const { data } = await axios.get(`/api/users?search=${search}`, config);
+      const { data } = await axios.get(
+        `http://localhost:4001/api/users?search=${search}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -88,17 +94,17 @@ const SideDrawer = () => {
 
       const config = {
         headers: {
-          "Content-type": "application/json", 
+          "Content-type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       };
+
       const { data } = await axios.post(
-        "/api/chat",
+        "http://localhost:4001/api/chat",
         { userId: userInfoId },
         config
       );
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      console.log(data);
       setSelectedChat(data);
       setLoading(false);
       onClose();
@@ -130,12 +136,12 @@ const SideDrawer = () => {
             onClick={onOpen}
           >
             <i className="fas fa-search" style={{ marginRight: "5px" }}></i>
-            <Text>Search UserInfo</Text>
+            <Text>Search User</Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans" flex="1" textAlign="center">
-          Welcome into Chat
-        </Text>
+        <Box flexGrow={1} display="flex" justifyContent="center">
+          <Image src="/AtlasNet.png" alt="AtlasNet" w={160} />
+        </Box>
         <Menu>
           <MenuButton p={1}>
             <BellIcon fontSize={"2xl"} />
@@ -145,7 +151,6 @@ const SideDrawer = () => {
             <MenuItem>Create a Copy</MenuItem>
           </MenuList>
         </Menu>
-
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
             <Avatar

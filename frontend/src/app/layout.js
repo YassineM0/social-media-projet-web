@@ -2,6 +2,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./context/authContext";
 import { PostProvider } from "./context/postsContext";
+import ChatProvider from "./context/ChatProvider";
+import { ChakraProvider } from "@chakra-ui/react";
+import "./layout.css"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,9 +16,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`Layout ${inter.className}`}>
         <AuthProvider>
-          <PostProvider>{children}</PostProvider>
+          <PostProvider>
+            <ChatProvider>
+              <ChakraProvider>{children}</ChakraProvider>
+            </ChatProvider>
+          </PostProvider>
         </AuthProvider>
       </body>
     </html>

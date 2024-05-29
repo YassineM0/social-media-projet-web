@@ -6,12 +6,15 @@ import SideDrawer from "../components/Diverse/SideDrawer";
 import MyChats from "../components/MyChats";
 import ChatBox from "../components/ChatBox";
 
-const page = () => {
+const Page = () => {
   const { userInfo } = ChatState();
   const [fetchAgain, setFetchAgain] = useState(false);
 
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      className="bg-cover"
+      style={{ width: "100%", backgroundImage: "url('zlijj.png')" }}
+    >
       {userInfo && <SideDrawer />}
       <Box
         display="flex"
@@ -32,4 +35,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

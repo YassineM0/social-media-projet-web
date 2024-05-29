@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Button,
@@ -45,7 +46,10 @@ const GroupChatModel = ({ children, setFetchAgain, fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get(`/api/users?search=${search}`, config);
+      const { data } = await axios.get(
+        `http://localhost:4001/api/users?search=${search}`,
+        config
+      );
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -79,7 +83,7 @@ const GroupChatModel = ({ children, setFetchAgain, fetchAgain }) => {
       };
 
       const { data } = await axios.post(
-        "/api/chat/group",
+        "http://localhost:4001/api/chat/group",
         { name: groupChatName, users: JSON.stringify(selectedUsers) },
         config
       );

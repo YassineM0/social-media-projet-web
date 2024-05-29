@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import ScrollableFeed from "react-scrollable-feed";
 import { ChatState } from "../context/ChatProvider";
@@ -9,9 +11,9 @@ const ScrollableChat = ({ messages }) => {
   const isSameSender = (messages, msg, i) => {
     return (
       i < messages.length - 1 &&
-      (messages[i + 1].sender._id !== msg.sender._id || 
+      (messages[i + 1].sender._id !== msg.sender._id ||
         messages[i + 1].sender._id === undefined) &&
-      messages[i].sender._id !== userInfo.user._id 
+      messages[i].sender._id !== userInfo.user._id
     );
   };
 
@@ -19,14 +21,14 @@ const ScrollableChat = ({ messages }) => {
     return (
       i === messages.length - 1 &&
       messages[messages.length - 1].sender._id !== userInfo.user._id &&
-      messages[messages.length - 1] 
+      messages[messages.length - 1]
     );
   };
 
   const isSameSenderMargin = (messages, msg, i) => {
     if (
       i < messages.length - 1 &&
-      messages[i + 1].sender._id === msg.sender._id && 
+      messages[i + 1].sender._id === msg.sender._id &&
       messages[i].sender._id !== userInfo.user._id
     )
       return 33;
