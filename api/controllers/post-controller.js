@@ -12,7 +12,13 @@ const fs = require('fs');
  * @access  Public
  */
 const getFeedPosts = asyncHandler( async (req,res) => {
-    const posts = await Post.find().populate("userId").sort({ createdAt: -1 })
+    const posts = await Post.find().populate({path :"userId", select: "_id lastName firstName profilePicture"}).populate({
+        path: 'comments',
+        populate: {
+            path: 'userId',
+            select : "-password -email -dateOfBirth -bioContent -location -friends -backgroundPicture"
+        }
+    }).sort({ createdAt: -1 }).select(" -postPicture")
     res.status(200).json(posts);
     }
 )
@@ -136,18 +142,23 @@ const commentPost = asyncHandler( async (req,res) => {
     if (!post) {
         return res.status(404).json({ message: 'Post not found' });
     }
-    const commentId = new mongoose.Types.ObjectId();
+    //const commentId = new mongoose.Types.ObjectId();
 
     const newComment = {
         userId,
         text : comment,
         createdAt: new Date()
     };
-    console.log(commentId, newComment);
-    post.comments.set(commentId, newComment)
-    await post.save();
+    // post.comments.set(commentId, newComment)
+    // await post.save();
 
-    res.status(201).json({ message: 'Comment added', comment: { id: commentId, ...newComment } });
+    const updatedPost = await Post.findByIdAndUpdate(
+        postId,
+        { $push: { comments: newComment } },
+        { new: true }
+    )
+    res.status(201).json(updatedPost);
+    //res.status(201).json({ message: 'Comment added', comment: { id: commentId, ...newComment } });
 } )
 
 /** 
@@ -161,12 +172,12 @@ const deleteComment = asyncHandler( async (req,res) => {
     // Find the post by ID
     const post = await Post.findById(postId);
     // Find the comment by ID
-    const comment = post.comments.get(commentId)
+    const comment = post.comments.id(commentId)
     if (!post) {
         return res.status(404).json({ message: 'post not found' });
     }
     if (comment){
-        await post.comments.delete(commentId)
+        post.comments.remove(commentId)
     } else {
         return res.status(404).json({ message: 'comment not found' });
     }
@@ -192,10 +203,10 @@ const updateComment = asyncHandler( async (req,res) => {
     if (!newComment) {
         return res.status(400).json({ message: 'Comment sould not be empty!' });
     }
-    const oldComment = post.comments.get(commentId)
+    const oldComment = post.comments.id(commentId)
     if (oldComment){
         oldComment.text = newComment;
-        post.comments.set(commentId, oldComment);
+        //post.comments.set(commentId, oldComment);
     } else {
         return res.status(404).json({ message: 'comment not found' });
     }

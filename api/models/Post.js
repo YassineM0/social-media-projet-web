@@ -28,26 +28,18 @@ const PostSchema = new mongoose.Schema({
         of: Boolean,
         default : {}
     },
-    comments: {
-        type: Map,
-        of: new mongoose.Schema({
-            userId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User',
-                required: true
-            },
-            text: {
-                type: String,
-                required: true
-            },
-            createdAt: {
-                type: Date,
-                default: Date.now
-            }
-        }),
-        default: {},
-        required : false,
-    }
+    comments: [{
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        text: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
+    }]
 },
 {
     timestamps : true,
