@@ -28,7 +28,7 @@ const Feed = () => {
             caption={post.description}
             profilePic=""
             src={post.postPicture}
-            likes={Object.keys(post.likes).length}
+            likes={post.likes ? Object.keys(post.likes).length : 0}
             postId={post._id}
             commentList={post.comments}
             share=""

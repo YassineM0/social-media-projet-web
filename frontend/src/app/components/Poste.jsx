@@ -8,7 +8,7 @@ const Poste = ({
   caption,
   profilePic,
   src,
-  likes,
+  likes: initialLikes,
   commentList,
 }) => {
   const { token, userId } = useAuthContext();
@@ -19,6 +19,7 @@ const Poste = ({
   const [comments, setComments] = useState(commentList || []);
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState(false);
+  const [likes, setLikes] = useState(initialLikes || 0);
 
   const menuRef = useRef(null);
 
@@ -124,6 +125,29 @@ const Poste = ({
       console.error("Error adding comment:", error);
     }
   };
+  const handleLike = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4001/api/posts/${postId}/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to like the post");
+      }
+
+      const data = await response.json();
+      setLikes(data.likes);
+    } catch (error) {
+      console.error("Error liking the post:", error);
+    }
+  };
   const toggleComments = () => {
     setShowComments(!showComments);
   };
@@ -190,7 +214,7 @@ const Poste = ({
       </div>
       <div className="flex flex-row items-center justify-between m-auto mb-1 w-9">
         <div className="flex items-center">
-          <button>
+          <button onClick={handleLike}>
             <img src="/Add.png" width={20} height={20} className="mr-1" />
           </button>
           <div>
