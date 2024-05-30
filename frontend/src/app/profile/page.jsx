@@ -10,13 +10,13 @@ import { usePostContext } from "../context/postsContext";
 import { useAuthContext } from "../context/authContext";
 
 const Page = () => {
-  const { profilePosts, fetchProfilePosts } = usePostContext();
+  const { profilePosts, fetchPosts } = usePostContext();
   const { userId } = useAuthContext();
   useEffect(() => {
     console.log(userId);
     console.log(profilePosts);
     if (userId) {
-      fetchProfilePosts(userId);
+      fetchPosts(userId);
     }
   }, [profilePosts, userId]);
 

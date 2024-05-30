@@ -18,29 +18,29 @@ const {
 router
   .route("/")
   .post(upload.single("postPicture"), verifyToken, authorization, addPost)
-  .get(verifyToken, authorization, getFeedPosts);
+  .get(/*verifyToken, authorization,*/ getFeedPosts);
 
 // /api/posts/:userId
-router.route("/:userId").get(verifyToken, authorization, getUserPosts);
+router.route("/:userId").get(/*verifyToken, authorization,*/ getUserPosts);
 
 // /api/posts/:postId/:userId
-router.route("/:postId/:userId").patch(verifyToken, authorization, likePost);
+router.route("/:postId/:userId").patch(/*verifyToken, authorization,*/ likePost);
 
 // /api/posts/:postId/:userId/comment
 router
   .route("/:postId/:userId/comment")
-  .post(verifyToken, authorization, commentPost);
+  .post(/*verifyToken, authorization,*/ commentPost);
 
 // /api/posts/:postId/:commentId
 router
   .route("/:postId/:commentId")
-  .delete(verifyToken, authorization, deleteComment)
-  .put(verifyToken, authorization, updateComment);
+  .delete(/*verifyToken, authorization,*/ deleteComment)
+  .put(/*verifyToken, authorization,*/ updateComment);
 
 // /api/posts/:postId
 router
   .route("/:postId")
-  .delete(verifyToken, authorization, deletePostByPostId)
-  .put(verifyToken, authorization, updatePostByPostId);
+  .delete(/*verifyToken, authorization,*/ deletePostByPostId)
+  .put(/*verifyToken, authorization,*/ updatePostByPostId);
 
 module.exports = router;

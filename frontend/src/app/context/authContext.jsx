@@ -10,13 +10,16 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      setUserId(token);
+    const storedToken = localStorage.getItem("authToken");
+    const storedId = localStorage.getItem("authId");
+    if (storedToken) {
+      setToken(storedToken);
+      setUserId(storedId);
     }
   }, []);
   const login = (id, token) => {
     localStorage.setItem("authToken", token);
+    localStorage.setItem("authId", id);
     setUserId(id);
     setToken(token);
   };

@@ -9,11 +9,15 @@ const SideBar = () => {
         <IoMdMenu size={35} />
       </div>
       <div className="py-2 flex flex-col gap-0.5">
+        <a href="/accueil">
+          <div className="hover:bg-blueHover p-1 rounded-llg">
+            <img src="/Home.png" alt="Menu" width={35} height={35} />
+          </div>
+        </a>
         <div className="hover:bg-blueHover p-1 rounded-llg">
-          <img src="/Home.png" alt="Menu" width={35} height={35} />
-        </div>
-        <div className="hover:bg-blueHover p-1 rounded-llg">
-          <img src="/Profile.png" alt="Menu" width={35} height={35} />
+          <a href="/profile">
+            <img src="/Profile.png" alt="Menu" width={35} height={35} />
+          </a>
         </div>
         <div className="hover:bg-blueHover p-1 rounded-llg">
           <img src="/Notif.png" alt="Menu" width={35} height={35} />

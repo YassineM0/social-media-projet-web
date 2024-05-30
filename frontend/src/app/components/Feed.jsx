@@ -10,7 +10,7 @@ const Feed = () => {
   const { posts, fetchPosts } = usePostContext();
 
   useEffect(() => {
-    console.log(userId);
+    console.log("userId:", userId);
     console.log(posts);
     if (userId) {
       fetchPosts(userId);
@@ -19,7 +19,7 @@ const Feed = () => {
 
   return (
     <div className="flex flex-col w-10">
-      <PostFeature/>
+      <PostFeature />
       <div className="">
         {posts.map((post) => (
           <Poste
@@ -28,7 +28,7 @@ const Feed = () => {
             caption={post.description}
             profilePic=""
             src={post.postPicture}
-            likes={Object.keys(post.likes).length}
+            likes={post.likes ? Object.keys(post.likes).length : 0}
             postId={post._id}
             commentList={post.comments}
             share=""

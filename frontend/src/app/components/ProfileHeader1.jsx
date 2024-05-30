@@ -66,7 +66,7 @@ const ProfileHeader1 = () => {
     <div className="flex flex-col">
       <div className="relative h-5 w-auto mx-1.5 mt-1.5 ">
         <img
-          src="/im11.jpg"
+          src="/defaultBackground.png"
           className="w-full h-full rounded-3xl object-cover"
         />
         <div className="absolute bottom-0 right-2 translate-y-1/2 ">
