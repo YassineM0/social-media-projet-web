@@ -26,7 +26,11 @@ export const PostProvider = ({ children }) => {
   };
   const fetchProfilePosts = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:4001/api/posts/${userId}`);
+      const response = await fetch(`http://localhost:4001/api/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await response.json();
       setProfilePosts(data);
     } catch (error) {

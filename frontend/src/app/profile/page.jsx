@@ -10,41 +10,17 @@ import { usePostContext } from "../context/postsContext";
 import { useAuthContext } from "../context/authContext";
 
 const Page = () => {
-  const { profilePosts, fetchPosts } = usePostContext();
-  const { userId } = useAuthContext();
-  useEffect(() => {
-    console.log(userId);
-    console.log(profilePosts);
-    if (userId) {
-      fetchPosts(userId);
-    }
-  }, [profilePosts, userId]);
 
   return (
     <div
-      className=" bg-center bg-scroll bg-gray3 flex flex-col h-fit "
+      className="bg-repeat		"
       style={{ backgroundImage: "url('zlijj.png')" }}
     >
       <div className="flex ">
-        <div className="w-5 sticky h-fit  top-0 ">
+        <div className="w-2.5 sticky h-fit  top-0 ">
           <SideBar />
         </div>
-
         <ProfileHeader1 />
-        <div>
-          {profilePosts.map((post) => (
-            <Poste
-              key={post._id}
-              name={post.userId.lastName}
-              caption={post.description}
-              profilePic=""
-              src={post.picturePath}
-              likes={Object.keys(post.likes).length}
-              comments=""
-              share=""
-            />
-          ))}
-        </div>
       </div>
     </div>
   );
