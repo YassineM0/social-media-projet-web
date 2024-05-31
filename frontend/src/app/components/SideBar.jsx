@@ -24,16 +24,18 @@ const SideBar = () => {
         <div className="hover:bg-blueHover p-1 rounded-llg">
           <img src="/Notif.png" alt="Menu" width={35} height={35} />
         </div>
-        <div className="hover:bg-blueHover p-1 rounded-llg">
-          <img
-            src="/message.png"
-            alt="Menu"
-            width={35}
-            height={35}
-            // onClick={() => {
-            //   router.push("/chat");
-            // }}
-          />
+        <div  className="hover:bg-blueHover p-1 rounded-llg">
+          <a href="/chat">
+            <img
+              src="/message.png"
+              alt="Menu"
+              width={35}
+              height={35}
+              // onClick={() => {
+              //   router.push("/chat");
+              // }}
+            />
+          </a>
         </div>
         <div className="hover:bg-blueHover p-1 rounded-llg">
           <img src="/Games.png" alt="Menu" width={35} height={35} />

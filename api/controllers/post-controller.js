@@ -12,13 +12,13 @@ const fs = require('fs');
  * @access  Public
  */
 const getFeedPosts = asyncHandler( async (req,res) => {
-    const posts = await Post.find().populate({path :"userId", select: "_id lastName firstName profilePicture"}).populate({
+    const posts = await Post.find().populate({path :"userId", select: "_id lastName firstName profilePicture occupation"}).populate({
         path: 'comments',
         populate: {
             path: 'userId',
             select : "-password -email -dateOfBirth -bioContent -location -friends -backgroundPicture"
         }
-    }).sort({ createdAt: -1 }).select(" -postPicture")
+    }).sort({ createdAt: -1 })
     res.status(200).json(posts);
     }
 )
@@ -31,7 +31,13 @@ const getFeedPosts = asyncHandler( async (req,res) => {
  */
 const getUserPosts = asyncHandler( async (req,res) => {
     const userId = req.params.userId;
-    const post = await Post.find({userId}).populate("userId")
+    const post = await Post.find({userId}).populate({path :"userId", select: "_id lastName firstName profilePicture occupation"}).populate({
+        path: 'comments',
+        populate: {
+            path: 'userId',
+            select : "-password -email -dateOfBirth -bioContent -location -friends -backgroundPicture"
+        }
+    }).sort({ createdAt: -1 })
     if (post){
         res.status(200).json(post)
     } else (

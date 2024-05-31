@@ -10,11 +10,6 @@ const Feed = () => {
   const { posts, fetchPosts } = usePostContext();
 
   useEffect(() => {
-<<<<<<< HEAD
-    console.log("userId:", userId);
-    console.log(posts);
-=======
->>>>>>> origin/Hamza_Akdim
     if (userId) {
       fetchPosts(userId);
     }

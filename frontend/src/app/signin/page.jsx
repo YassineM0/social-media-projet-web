@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -80,4 +79,4 @@ const page = () => {
 };
 
 export default page;
->>>>>>> origin/Hamza_Akdim
+
