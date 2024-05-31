@@ -35,7 +35,7 @@ const getUserPosts = asyncHandler( async (req,res) => {
         path: 'comments',
         populate: {
             path: 'userId',
-            select : "-password -email -dateOfBirth -bioContent -location -friends -backgroundPicture"
+            select : "-password"
         }
     }).sort({ createdAt: -1 })
     if (post){
