@@ -37,9 +37,11 @@ const SideBar = () => {
             />
           </a>
         </div>
-        <div className="hover:bg-blueHover p-1 rounded-llg">
-          <img src="/Games.png" alt="Menu" width={35} height={35} />
-        </div>
+        <a href="/wordle">
+          <div className="hover:bg-blueHover p-1 rounded-llg">
+            <img src="/Games.png" alt="Menu" width={35} height={35} />
+          </div>
+        </a>
       </div>
       <div className="hover:bg-blueHover p-1 rounded-llg">
         <img src="/Logout.png" alt="Menu" width={35} height={35} />
