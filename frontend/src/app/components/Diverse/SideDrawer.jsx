@@ -46,7 +46,7 @@ const SideDrawer = () => {
 
   const logout = () => {
     localStorage.removeItem("userInfo");
-    router.push("/signin");
+    router.push("/");
   };
 
   const toast = useToast();

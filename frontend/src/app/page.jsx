@@ -20,6 +20,7 @@ const page = () => {
         },
       });
       const data = await response.json();
+      localStorage.setItem("userInfo", JSON.stringify(data));
       console.log(data);
       if (response.ok) {
         login(data.user._id, data.token);

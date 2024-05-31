@@ -14,7 +14,7 @@ const ChatProvider = ({ children }) => {
     setUserInfo(data);
 
     if (!data) {
-      router.push("/signin"); 
+      router.push("/"); 
     }
   }, [router]);
 
