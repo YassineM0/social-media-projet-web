@@ -13,13 +13,13 @@ const Page = () => {
 
   return (
     <div
-      className="bg-repeat		"
+      className="bg-cover bg-center h-screen flex w-screen overflow-y-auto "
       style={{ backgroundImage: "url('zlijj.png')" }}
     >
-      <div className="flex ">
-        <div className="w-2.5 sticky h-fit  top-0 ">
-          <SideBar />
-        </div>
+      <div className="w-3 fixed top-0 h-screen">
+        <SideBar />
+      </div>
+      <div className="flex ml-3.5 w-screen">
         <ProfileHeader1 />
       </div>
     </div>

@@ -47,14 +47,13 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
 
   return (
     <Box
+      className="border-gray2 border-3 rounded-mdd mt-1"
       d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir={"column"}
       alignItems={"center"}
       p={3}
       bg={"white"}
       w={{ base: "100%", md: "31%" }}
-      borderRadius={"lg"}
-      borderWidth={"1px"}
     >
       <Box
         pb={3}
@@ -78,13 +77,13 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
           </Button>
         </GroupChatModel>
       </Box>
-      <Box
+      <div
         d="flex"
         flexDir={"column"}
         p={3}
-        bg={"#F8F8F8"}
+        //bg={"#F8F8F8"}
         w="100%"
-        h={"100%"}
+        className="h-fit max-h-8 overflow-y-auto"
         borderRadius="lg"
         // overflowY="auto"
         overflowY="hidden"
@@ -116,7 +115,7 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
         ) : (
           <ChatLoading />
         )}
-      </Box>
+      </div>
     </Box>
   );
 };

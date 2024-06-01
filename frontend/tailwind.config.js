@@ -27,6 +27,7 @@ module.exports = {
         7: "27rem",
         8: "33rem",
         9: "40rem",
+        9.5 : "42rem",
         10: "46rem",
         x: "40rem",
         xx: "50rem",
@@ -131,6 +132,7 @@ module.exports = {
         1.5: "2rem",
         2: "3rem",
         3: "4rem",
+        3.5 : "6rem",
         4: "9rem",
         5: "12rem",
         6: "17rem",
@@ -159,6 +161,7 @@ module.exports = {
       },
       width: {
         95: "95%",
+        1: "2.1rem",
       },
     },
   },

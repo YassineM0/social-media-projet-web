@@ -122,11 +122,11 @@ const SideDrawer = () => {
   return (
     <>
       <Box
+        className="w-[98%] border-gray2 border-3 rounded-mdd"
         display="flex"
         alignItems="center"
         bg="white"
         p="5px 10px"
-        borderWidth="5px"
       >
         <Tooltip label="Search userInfos to chat" hasArrow placement="bottom">
           <Button

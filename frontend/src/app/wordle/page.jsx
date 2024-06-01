@@ -7,6 +7,7 @@ import Board from "../game/components/Board";
 import GameOver from "../game/components/GameOver";
 import { createContext, useEffect, useState } from "react";
 import { boardDefault, generateWordSet } from "../game/Words";
+import SideBar from "../components/SideBar";
 
 export const AppContext = createContext();
 function page() {
@@ -70,31 +71,36 @@ function page() {
   };
 
   return (
-    <div className="App">
-      <nav>
-        <h1>Wordle</h1>
-      </nav>
-      <AppContext.Provider
-        value={{
-          board,
-          setBoard,
-          currAttempt,
-          setCurrAttempt,
-          onSelectLetter,
-          onDelete,
-          onEnter,
-          correctWord,
-          setDisabledLetters,
-          disabledLetters,
-          gameOver,
-          setGameOver,
-        }}
-      >
-        <div className="game">
-          <Board />
-          {gameOver.gameOver ? <GameOver /> : <Keyboard />}
-        </div>
-      </AppContext.Provider>
+    <div className=" fixed overflow-y-auto h-screen" style={{ backgroundImage: "url('zlijj.png')" }}>
+      <div className="w-3 fixed top-0 h-screen">
+        <SideBar />
+      </div>
+      <div className="w-screen ml-4">
+        <nav className="">
+          <h1 className="text-black">Wordle</h1>
+        </nav>
+        <AppContext.Provider
+          value={{
+            board,
+            setBoard,
+            currAttempt,
+            setCurrAttempt,
+            onSelectLetter,
+            onDelete,
+            onEnter,
+            correctWord,
+            setDisabledLetters,
+            disabledLetters,
+            gameOver,
+            setGameOver,
+          }}
+        >
+          <div className="game">
+            <Board />
+            {gameOver.gameOver ? <GameOver /> : <Keyboard />}
+          </div>
+        </AppContext.Provider>
+      </div>
     </div>
   );
 }

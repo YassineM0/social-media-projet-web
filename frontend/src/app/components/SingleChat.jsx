@@ -133,9 +133,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           <Flex
             flexDir="column"
             p={3}
-            bg={"#E8E8E8"}
+            //bg={"#E8E8E8"}
+            className="bg-contain"
+            style={{ backgroundImage: "url('chatBackground.jpg')" }}
             w="100%"
-            h="100%"
+            h="90%"
             borderRadius={"lg"}
             overflowY="hidden"
           >
@@ -153,8 +155,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
             <Flex mt={3}>
               <Input
+                className="w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500"
                 variant={"filled"}
-                bg={"#E0E0E0"}
+                bg={"white"}
                 value={newMessage}
                 placeholder="Enter a message..."
                 onChange={(e) => setNewMessage(e.target.value)}
@@ -169,9 +172,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           </Flex>
         </>
       ) : (
-        <Center height="100vh">
+        <Center height="81vh" className="">
           <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-            Click on a user to start chatting
+            Click on a your moroccan friend to start chatting
           </Text>
         </Center>
       )}

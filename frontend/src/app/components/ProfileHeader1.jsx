@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import LastColumn from "../components/LastColumn";
 import FeedProfile from "./FeedProfile";
 import { useAuthContext } from "../context/authContext";
+import { useToast } from "@chakra-ui/react";
 
 const ProfileHeader1 = () => {
   const { userId, token } = useAuthContext();
@@ -12,7 +13,7 @@ const ProfileHeader1 = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingField, setEditingField] = useState("");
   const [fullName, setFullName] = useState("");
-
+  const toast = useToast();
   useEffect(() => {
     const fetchUserData = async () => {
       if (userId) {
@@ -80,6 +81,7 @@ const ProfileHeader1 = () => {
           },
           body: JSON.stringify(updatedData),
         }
+        
       );
       if (response.ok) {
         const updatedUser = await response.json();
@@ -91,6 +93,13 @@ const ProfileHeader1 = () => {
         const errorData = await response.json();
         console.error("Failed to save user data", errorData);
         window.location.reload(); // à supprimer
+        toast({
+          title: 'Profile Updated.',
+          description: "Your Profile has been Updated successfully.",
+          status: 'info',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error("Error saving user data:", error);
@@ -98,8 +107,8 @@ const ProfileHeader1 = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="relative h-5 w-auto mx-1.5 mt-1.5 ">
+    <div className="flex flex-col w-full mx-3">
+      <div className="relative h-5 w-auto mt-1.5 ">
         <img
           src="im11.jpg"
           className="w-full h-full rounded-3xl object-cover"
@@ -119,6 +128,16 @@ const ProfileHeader1 = () => {
               Edit Profile
             </button>
           </div>
+          {isEditing && (
+            <div className="bg-gray1 text-center w-3 h-1 text-white hover:bg-blue hover:text-black hover:tracking-wider rounded-md transition-smooth duration-500 p-1 right-7 translate-y-1/2 ">
+              <button
+                onClick={handleSaveClick}
+                className="inline text-sm font-sans "
+              >
+                Save
+              </button>
+            </div>
+          )}
           <div className="right-4.25 translate-y-1/4 text-3xl font-bold text-gray-800">
             {isEditing && editingField === "fullName" ? (
               <input
@@ -134,13 +153,13 @@ const ProfileHeader1 = () => {
         </div>
       </div>
 
-      <div className="flex">
-        <div className="flex flex-col mx-2">
-          <div className="bg-white border-3 border-gray2 rounded-mdd mx-2 mt-4 w-10 h-fit">
-            <div className="font-bold text-2xl mt-1 text-gray-800 ml-1">
+      <div className="flex gap-1 justify-between ml-2 mr-2">
+        <div className="flex flex-col">
+          <div className="bg-white border-3 border-gray2 rounded-mdd mt-4 h-fit">
+            <div className="font-bold text-2xl text-center mt-1 text-gray-800 ml-1">
               <h1>About me</h1>
             </div>
-            <div className="m-1 font-sans text-gray-600">
+            <div className="m-1 font-sans text-gray-600 text-center">
               {isEditing && editingField === "bioContent" ? (
                 <textarea
                   name="bioContent"
@@ -153,11 +172,11 @@ const ProfileHeader1 = () => {
               )}
             </div>
           </div>
-          <div className="mx-2">
+          <div className="">
             <FeedProfile />
           </div>
         </div>
-        <div className="flex flex-col mr-5">
+        <div className="flex flex-col">
           <div className="flex flex-col items-center p-2 bg-white border-3 border-gray2 rounded-mdd space-y-2 mt-4 h-fit">
             <div className="flex flex-col space-y-1 text-center w-full">
               <div className="border-b-2 border-gray3 pb-2">
@@ -210,16 +229,6 @@ const ProfileHeader1 = () => {
               </div>
             </div>
           </div>
-          {isEditing && (
-            <div className="flex justify-center">
-              <button
-                onClick={handleSaveClick}
-                className="bg-gray1 text-center w-3 h-1 text-white hover:bg-blue hover:text-black hover:tracking-wider rounded-md transition-smooth duration-500 p-1 right-7 translate-y-1/2 "
-              >
-                Save
-              </button>
-            </div>
-          )}
           <div className="mt-1">
             <LastColumn />
           </div>

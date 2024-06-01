@@ -178,15 +178,17 @@ const Poste = ({
   };
 
   return (
-    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-10 overflow-hidden">
+    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-full max-w-10 overflow-hidden">
       <div className=" flex-row pt-1 pb-1 pl-2 bg-gray2 flex justify-between  items-center">
         <div className="flex items-center">
-          <img
-            src={profilePic}
-            alt=""
-            className="w-1.25 h-1.25 rounded-lg bg-blue mr-1"
-          />
-          <h6 className="text-base font-semibold">{name}</h6>
+            <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
+              <img
+                src={imageSrc}
+                alt=""
+                className="object-center w-full"
+              />
+            </div>
+          <h6 className="text-base font-semibold ml-1">{name}</h6>
         </div>
         <div
           className="menu-container relative inline-block mr-1"
@@ -213,78 +215,85 @@ const Poste = ({
           )}
         </div>
       </div>
-
-      {isEditing ? (
-        <div className="flex p-2 items-center">
-          <textarea
-            className="border p-2 mr-1 w-full rounded focus:outline-none focus:ring focus:border-blue-300"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <button
-            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
-            onClick={handleSave}
-          >
-            Save
-          </button>
-        </div>
-      ) : (
-        <p className="pl-2 pt-2 pb-1">{description}</p>
-      )}
-      <div className="w-9 h-auto m-auto rounded-mdd border-b-2 mb-1.25">
-        <img src={imageSrc} alt="" className="" />
-      </div>
-      <div className="flex flex-row items-center justify-between m-auto mb-1 w-9">
-        <div className="flex items-center">
-          <button onClick={handleLike}>
-            <img src="/Add.png" width={20} height={20} className="mr-1" />
-          </button>
-          <div>
-            <p className="">{likes} found this interesting</p>
-          </div>
-        </div>
-        <div className="flex flex-row items-center">
-          <img src="/Comment.png" width={20} height={20} className="mr-1" />
-          <div>
-            <button onClick={toggleComments}>
-              <p>{comments.length} comments</p>
+      <div className="p-2">
+        {isEditing ? (
+          <div className="flex p-2 items-center">
+            <textarea
+              className="border p-2 mr-1 w-full rounded focus:outline-none focus:ring focus:border-blue-300"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+            <button
+              className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
+              onClick={handleSave}
+            >
+              Save
             </button>
           </div>
+        ) : (
+          <p className="pb-1">{description}</p>
+        )}
+        <div className="h-auto max-h-9 m-auto rounded-mdd border-b-2 mb-1.25 overflow-hidden flex justify-center items-center">
+          <img src={imageSrc} alt="" className="w-full" />
         </div>
-        <div className="flex items-center">
-          <img src="/Share.png" width={20} height={20} className="mr-1" />
-          <div>
-            <p>0 share</p>
+        <div className="flex flex-row items-center justify-between m-auto mb-1">
+          <div className="flex items-center">
+            <button onClick={handleLike}>
+              <img src="/Add.png" width={30} height={30} className="mr-1" />
+            </button>
+            <div>
+              <p className="">{likes}</p>
+            </div>
+          </div>
+          <div className="flex flex-row items-center">
+            <img src="/Comment.png" width={30} height={30} className="mr-1" />
+            <div>
+              <button onClick={toggleComments}>
+                <p>{comments.length}</p>
+              </button>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <img src="/Share.png" width={30} height={30} className="mr-1" />
+            <div>
+              <p></p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col w-9">
-        <div className=" flex-row pl-2 mb-1 flex justify-between">
-          <img
-            src={profilePic}
-            alt=""
-            className="w-1 h-1 rounded-lg mr-0.5 bg-blue object-center"
-          />
-          <input
-            type="text"
-            className="bg-silver  rounded-mdd pr-3  px-6 h-1 focus:outline-none focus:ring focus:border-blue-300"
-            placeholder="Add your Comment!"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <button
-            onClick={handleAddComment}
-            className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
-          >
-            Comment
-          </button>
+        <div className="flex flex-col">
+          <div className=" flex-row mb-1 flex justify-between">
+            <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
+              <img
+                src={imageSrc}
+                alt=""
+                className="object-center"
+              />
+            </div>
+            <div className="w-[75%]">
+              <input
+                type="text"
+                className="bg-silver rounded-mdd h-1 p-2 w-[100%] focus:outline-none focus:ring focus:border-blue-300"
+                placeholder="Add your Comment!"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+              />
+            </div>
+            <div className=" w-[17%]">
+              <button
+                onClick={handleAddComment}
+                className="bg-[#538DD7] text-white font-semibold w-[100%] h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
+              >
+                Comment
+              </button>
+            </div>
+          </div>
+          {showComments && (
+            <CommentsComponent
+              comments={commentList}
+              onClose={handleCloseComments}
+            />
+          )}
         </div>
-        {showComments && (
-          <CommentsComponent
-            comments={commentList}
-            onClose={handleCloseComments}
-          />
-        )}
       </div>
     </div>
   );

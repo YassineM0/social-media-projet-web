@@ -23,7 +23,7 @@ const LastColumn = () => {
   ];
 
   return (
-    <div className="mt-1.5 w-5 py-1 bg-white border-3 border-gray2 rounded-mdd px-2.15">
+    <div className="mt-1.5 bg-white border-3 border-gray2 rounded-mdd px-2.15 w-full">
       <div className="flex flex-row gap-3 items-center justify-between">
         <h2 className="text-183153 font-bold pb-1.5 pt-2">Messages</h2>
         <img src="message.png" width={30} height={30} />

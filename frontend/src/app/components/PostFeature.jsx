@@ -56,20 +56,22 @@ const PostFeature = () => {
   };
 
   return (
-    <div className="border-3 w-10 border-gray2 max-h-4 mt-1.5 rounded-mdd bg-white mb-1">
+    <div className="border-3 w-full max-w-10 border-gray2 max-h-4 mt-1.5 rounded-mdd bg-white mb-1">
       <div className="flex flex-row items-center p-2 border-b-2 justify-between">
-        <img src="/gilfoyl.png" alt="" className=" size-1 rounded-lg" />
+        <div className="w-[5%]">
+          <img src="/gilfoyl.png" alt="" className=" size-1 rounded-lg" />  
+        </div>
         <input
           type="text"
           onChange={(e) => setDescription(e.target.value)}
           name=""
           id=""
-          className="bg-silver rounded-mdd pr-4  px-6 h-1 focus:outline-none focus:ring focus:border-blue-300"
+          className="bg-silver rounded-mdd pl-2 w-[75%] h-1 focus:outline-none focus:ring focus:border-blue-300"
           placeholder="whats on your mind?"
         />
         <button
           onClick={handlePost}
-          className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500 "
+          className="bg-[#538DD7] text-white font-semibold w-[17%] h-1 rounded-mdd focus:ring-2 focus:ring-blue-500 "
         >
           Share
         </button>
