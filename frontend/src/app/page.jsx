@@ -35,9 +35,9 @@ const page = () => {
   };
 
   return (
-    <div className="relative bg-cover bg-center h-screen flex  "  style={{backgroundImage: "url('zlijj.png')"}}>
-      <div className="flex justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx ml-7 mt-4 rounded-llg shadow-lg">
-        <div>
+    <div className="relative bg-cover bg-center h-screen w-screen flex justify-center item-center "  style={{backgroundImage: "url('zlijj.png')"}}>
+      <div className="flex m-auto justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx  rounded-llg shadow-lg p-2.15">
+        <div className="flex flex-col">
           <Image
             src="/AtlasNet.png"
             alt="Logo"
@@ -45,6 +45,7 @@ const page = () => {
             height={10}
             priority
           />
+          <div className="font-display text-xl text-darkBlue">Join AtlasNet and connect with the vibrant Moroccan community. Sign up now!</div>
         </div>
         <div className="flex flex-col gap-0.5 bg-white  ">
           <input
