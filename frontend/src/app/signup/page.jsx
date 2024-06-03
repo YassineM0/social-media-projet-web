@@ -54,11 +54,14 @@ const page = () => {
         },
       };
 
-      const { data } = await axios.post(
-        "http://localhost:4001/api/auth/register",
+      const response = await fetch("http://localhost:4001/api/auth/register", {
+        method: "POST",
         formData,
-        config
-      );
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const data = await response.json();
 
       toast({
         title: "Rgistration Successful",
@@ -72,7 +75,6 @@ const page = () => {
 
       router.push("accueil");
     } catch (error) {
-      // console.log(error);
 
       if (error.response) {
         const { data } = error.response;
