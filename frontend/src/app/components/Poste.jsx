@@ -9,9 +9,12 @@ const Poste = ({
   name,
   caption,
   profilePic,
-  src,
-  likes: initialLikes,
+  postPicture,
+  likes,
+  setLikes,
+  post,
   commentList,
+  src
 }) => {
   const toast = useToast();
   const { token, userId } = useAuthContext();
@@ -21,8 +24,7 @@ const Poste = ({
   const [comments, setComments] = useState(commentList || []);
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState(false);
-  const [likes, setLikes] = useState(initialLikes || 0);
-
+  setLikes(Object.keys(post.likes).length)
   const menuRef = useRef(null);
 
   const bufferToBase64 = (buffer) => {
@@ -30,8 +32,8 @@ const Poste = ({
     return `data:image/jpeg;base64,${base64String}`;
   };
 
-  const imageSrc = src.data ? bufferToBase64(src.data) : "";
-
+  const imgProfile = profilePic ? bufferToBase64(profilePic) : "";
+  const imgPost = src.data ? bufferToBase64(src.data) : "";
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -137,12 +139,27 @@ const Poste = ({
         }
       );
       if (!response.ok) {
+        toast({
+          title: 'Failed to add your comment.',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
         throw new Error("Failed to add comment");
       }
+      if (response.ok){
+        toast({
+          title: 'Comment has been Aded.',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+        console.log(comments);
+        const data = await response.json();
+        setComments([...comments,data.newComment]);
+        setNewComment("");
+      }
 
-      const data = await response.json();
-      setComments([...comments, { user: "You", text: newComment }]);
-      setNewComment("");
     } catch (error) {
       console.error("Error adding comment:", error);
     }
@@ -163,15 +180,26 @@ const Poste = ({
       if (!response.ok) {
         throw new Error("Failed to like the post");
       }
+      if (response.ok){
+        const data = await response.json();
+        setLikes(likes);
+        toast({
+          title: `${data.message}`,
+          status: 'info',
+          duration: 9000,
+          isClosable: true,
+          position: 'bottom-left',
+        });
 
-      const data = await response.json();
-      setLikes(data.likes);
+      }
+      
     } catch (error) {
       console.error("Error liking the post:", error);
     }
   };
   const toggleComments = () => {
     setShowComments(!showComments);
+    console.log(comments);
   };
   const handleCloseComments = () => {
     setShowComments(false);
@@ -183,7 +211,7 @@ const Poste = ({
         <div className="flex items-center">
             <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
               <img
-                src={imageSrc}
+                src={imgProfile}
                 alt=""
                 className="object-center w-full"
               />
@@ -234,7 +262,7 @@ const Poste = ({
           <p className="pb-1">{description}</p>
         )}
         <div className="h-auto max-h-9 m-auto rounded-mdd border-b-2 mb-1.25 overflow-hidden flex justify-center items-center">
-          <img src={imageSrc} alt="" className="w-full" />
+          <img src={imgPost} alt="" className="w-full" />
         </div>
         <div className="flex flex-row items-center justify-between m-auto mb-1">
           <div className="flex items-center">
@@ -264,7 +292,7 @@ const Poste = ({
           <div className=" flex-row mb-1 flex justify-between">
             <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
               <img
-                src={imageSrc}
+                src={imgProfile}
                 alt=""
                 className="object-center"
               />
@@ -289,8 +317,10 @@ const Poste = ({
           </div>
           {showComments && (
             <CommentsComponent
-              comments={commentList}
+              comments={comments}
               onClose={handleCloseComments}
+              post={post}
+              buffer={bufferToBase64}
             />
           )}
         </div>

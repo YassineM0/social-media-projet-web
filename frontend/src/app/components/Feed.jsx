@@ -8,7 +8,7 @@ import { useAuthContext } from "../context/authContext";
 const Feed = () => {
   const { userId } = useAuthContext();
   const { posts, fetchPosts } = usePostContext();
-
+  const [likes, setLikes] = useState(0);
   useEffect(() => {
     if (userId) {
       fetchPosts(userId);
@@ -24,9 +24,11 @@ const Feed = () => {
             key={post._id}
             name={post.userId.lastName}
             caption={post.description}
-            profilePic=""
+            profilePic={post.userId.profilePicture.data.data}
             src={post.postPicture}
-            likes={post.likes ? Object.keys(post.likes).length : 0}
+            likes={likes}
+            setLikes = {setLikes}
+            post = {post}
             postId={post._id}
             commentList={post.comments}
             share=""

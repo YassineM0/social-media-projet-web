@@ -112,11 +112,11 @@ const likePost = asyncHandler( async (req,res) => {
         if (isLiked) {
             post.likes.delete(likerId);
             await post.save();
-            res.status(200).json({message : `${liker.firstName} ${liker.lastName} has unliked ${postOwner.firstName} ${postOwner.lastName} is post`})
+            res.status(200).json({message : `${liker.firstName} ${liker.lastName} has unliked ${postOwner.firstName} ${postOwner.lastName} is post` , likes : post.likes})
         } else {
             post.likes.set(likerId, true);
             await post.save();
-            res.status(200).json({message : `${liker.firstName} ${liker.lastName} has liked ${postOwner.firstName} ${postOwner.lastName} is post`})
+            res.status(200).json({message : `${liker.firstName} ${liker.lastName} has liked ${postOwner.firstName} ${postOwner.lastName} is post`, likes : post.likes })
         }
     } else if (!post){
         res.status(404).json({message : "Post Not Found"})
@@ -163,7 +163,7 @@ const commentPost = asyncHandler( async (req,res) => {
         { $push: { comments: newComment } },
         { new: true }
     )
-    res.status(201).json(updatedPost);
+    res.status(201).json({updatedPost, newComment});
     //res.status(201).json({ message: 'Comment added', comment: { id: commentId, ...newComment } });
 } )
 

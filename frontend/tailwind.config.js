@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      scrollbar: {
+        width: '8px', // Width of the scrollbar
+        track: 'rgba(0,0,0,0.1)', // Track color
+        thumb: '#0000', // Thumb color
+        hoverThumb: '#6755e3', // Thumb color on hover
+      },
       spacing: {
         0.5: "0.7rem",
         1: "2rem",
