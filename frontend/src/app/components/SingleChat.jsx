@@ -174,7 +174,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       ) : (
         <Center height="81vh" className="">
           <Text fontSize="3xl" pb={3} fontFamily="Work sans">
-            Click on a your moroccan friend to start chatting
+            Click on a user to start chatting
           </Text>
         </Center>
       )}
