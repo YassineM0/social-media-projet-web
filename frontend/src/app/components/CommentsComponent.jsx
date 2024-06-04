@@ -19,10 +19,10 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
         Hide Comments
       </button>
       <div
-        className="items-center justify-center flex flex-row border border-t-3 border-t-gray2 rounded-md p-1 pb-2 pt-2 bg-silver overflow-y-auto  "
-        style={scrollbarStyles}
+        className="items-center justify-center flex flex-row border border-t-3 border-t-gray2 rounded-md p-1 pb-2 bg-silver  "
+        
       >
-        <div className="max-h-2/3 w-full">
+        <div className="w-full overflow-y-auto max-h-6" style={scrollbarStyles}>
           <div className="flex flex-col gap-0.5 pl-1.15 pr-1.15">
             {comments.map((comment) => (
               <div

@@ -33,7 +33,7 @@ const register = asyncHandler(async (req, res) => {
     try {
       Data = await fs.promises.readFile(req.file.path);
       ContentType = req.file.mimetype;
-      req.file = req.file.path; 
+      //req.file = req.file.path; 
     } catch (err) {
       console.error(err);
       return res.status(500).send('Error reading image file');

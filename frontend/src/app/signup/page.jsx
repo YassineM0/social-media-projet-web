@@ -41,16 +41,17 @@ const page = () => {
     const formData = new FormData();
     if (picture) {
       formData.append("profilePicture", picture);
-    } else {
-      toast({
-        title: "No profile picture selected",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
-      return;
     }
+    // else {
+    //   toast({
+    //     title: "No profile picture selected",
+    //     status: "warning",
+    //     duration: 5000,
+    //     isClosable: true,
+    //     position: "bottom",
+    //   });
+    //   return;
+    // }
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);

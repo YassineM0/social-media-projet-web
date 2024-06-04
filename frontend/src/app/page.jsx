@@ -5,9 +5,6 @@ import { useAuthContext } from "./context/authContext";
 import Image from "next/image";
 import { useToast } from "@chakra-ui/react";
 
-
-const DataContext = createContext();
-
 const page = () => {
   const { login } = useAuthContext();
   const router = useRouter();
@@ -54,64 +51,56 @@ const page = () => {
       setError("An error occurred while logging in.");
     }
   };
-  useEffect(() => {
-    console.log(currentUser);
-  }, [currentUser]);
 
   return (
-    <DataContext.Provider value={{ currentUser }}>
-      <div
-        className="relative bg-cover bg-center h-screen w-screen flex justify-center item-center "
-        style={{ backgroundImage: "url('zlijj.png')" }}
-      >
-        <div className="flex m-auto justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx  rounded-llg shadow-lg p-2.15">
-          <div className="flex flex-col">
-            <Image
-              src="/AtlasNet.png"
-              alt="Logo"
-              width={350}
-              height={10}
-              priority
-            />
-            <div className="font-display text-xl text-darkBlue">
-              Join AtlasNet and connect with the vibrant Moroccan community.
-              Sign up now!
-            </div>
-          </div>
-          <div className="flex flex-col gap-0.5 bg-white  ">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="enter your mail"
-              className=" border-2 border-brd hover:border-blue rounded-mdd p-1.5"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="enter your password"
-              className="border-2 border-brd hover:border-blue rounded-mdd p-1.5"
-            />
-            <button
-              onClick={handleLogin}
-              className="border-2 rounded-mdd py-1.5 mt-1.5 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue hover:text-white hover:font-bold gap-2"
-            >
-              SUBMIT
-            </button>
-            <button
-              onClick={() => router.push('/signup')}
-              className="bg-blue hover:bg-darkBlue text-white font-bold pl-2 pr-2 py-1.5 border-2 rounded-mdd  transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:shadow-outline"
-            >
-              Sign Up
-            </button>
+    <div
+      className="relative bg-cover bg-center h-screen w-screen flex justify-center item-center "
+      style={{ backgroundImage: "url('zlijj.png')" }}
+    >
+      <div className="flex m-auto justify-center items-center h-7 gap-3 bg-white border-gray2 border-3 w-xx  rounded-llg shadow-lg p-2.15">
+        <div className="flex flex-col">
+          <Image
+            src="/AtlasNet.png"
+            alt="Logo"
+            width={350}
+            height={10}
+            priority
+          />
+          <div className="font-display text-xl text-darkBlue">
+            Welcome to Moroccan Comunity!
           </div>
         </div>
+        <div className="flex flex-col gap-0.5 bg-white  ">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="enter your mail"
+            className=" border-2 border-brd hover:border-blue rounded-mdd p-1.5"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="enter your password"
+            className="border-2 border-brd hover:border-blue rounded-mdd p-1.5"
+          />
+          <button
+            onClick={handleLogin}
+            className="border-2 rounded-mdd py-1.5 mt-1.5 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue hover:text-white hover:font-bold gap-2"
+          >
+            SUBMIT
+          </button>
+          <button
+            onClick={() => router.push("/signup")}
+            className="bg-blue hover:bg-darkBlue text-white font-bold pl-2 pr-2 py-1.5 border-2 rounded-mdd  transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:shadow-outline"
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
-    </DataContext.Provider>
+    </div>
   );
 };
-
-export const useData = () => useContext(DataContext);
 
 export default page;
