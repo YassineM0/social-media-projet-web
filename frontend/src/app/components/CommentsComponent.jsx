@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { CiMenuKebab } from "react-icons/ci";
 
 const CommentsComponent = ({ post,buffer, onClose }) => {
   const scrollbarStyles = {
@@ -9,6 +10,23 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
       width: "8px" /* Width of the entire scrollbar */,
     },
   };
+  const commentRef = useRef(null);
+  const [isOpenComment, setIsOpenComment] = useState(false)
+  const toggle = () => {
+    setIsOpenComment(!isOpenComment);
+  };
+  const handleClickOutside = (event) => {
+    if (commentRef.current && !commentRef.current.contains(event.target)) {
+      setIsOpenComment(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   let  comments = post.comments
   return (
     <>
@@ -30,19 +48,45 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
                 className="flex justify-start p-0.5 bg-white rounded-md"
               >
                 <div className="w-full flex flex-start flex-col">
-                  <div className="flex flex-row flex-start items-center">
-                    <div className="">
-                      <img
-                        src={buffer(comment.userId.profilePicture.data.data)}
-                        alt=""
-                        className="w-1 h-1 rounded-full bg-black mt-0.5"
-                      />
+                  <div className="flex flex-row flex-start items-center justify-between">
+                    <div className="flex flex-row flex-start items-center">
+                      <div className="">
+                        <img
+                          src={buffer(comment.userId.profilePicture.data.data)}
+                          alt=""
+                          className="w-1 h-1 rounded-full bg-black mt-0.5"
+                        />
+                      </div>
+                      <div className="ml-1">
+                        <p className="font-semibold ">
+                          {comment.userId.firstName}{` `}
+                          {comment.userId.lastName}
+                        </p>
+                      </div>
                     </div>
-                    <div className="ml-1">
-                      <p className="font-semibold ">
-                        {comment.userId.firstName}{` `}
-                        {comment.userId.lastName}
-                      </p>
+                    <div ref={commentRef} className="relative">
+                      <button
+                          className="text-2xl focus:outline-none"
+                          onClick={toggle}
+                        >
+                          <CiMenuKebab size={25} />
+                      </button>
+                      {isOpenComment && (
+                          <ul className="menu absolute right-0 mt-1.25 w-68 bg-white border-3 border-gray2 rounded-mdd shadow-lg z-10">
+                            <li
+                              className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
+                              //onClick={handleModify}
+                            >
+                              Modify
+                            </li>
+                            <li
+                              className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
+                              //onClick={handleDelete}
+                            >
+                              Delete
+                            </li>
+                          </ul>
+                      )}
                     </div>
                   </div>
                   <div className="mt-1">

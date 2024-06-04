@@ -47,8 +47,7 @@ const page = () => {
         setError(data.message);
       }
     } catch (err) {
-      console.error("Login error:", err);
-      setError("An error occurred while logging in.");
+      console.log("Login error:", err);
     }
   };
 
