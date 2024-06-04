@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
+import { useToast } from "@chakra-ui/react";
 
-const CommentsComponent = ({ post,buffer, onClose }) => {
+const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }) => {
   const scrollbarStyles = {
     /* Hide scrollbar for Chrome, Safari and Opera */
     scrollbarWidth: "none" /* Firefox */,
@@ -11,23 +12,72 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
     },
   };
   const commentRef = useRef(null);
-  const [isOpenComment, setIsOpenComment] = useState(false)
+  const [isOpenComment, setIsOpenComment] = useState(false);
+
+  const toast = useToast();
+  
   const toggle = () => {
     setIsOpenComment(!isOpenComment);
   };
-  const handleClickOutside = (event) => {
-    if (commentRef.current && !commentRef.current.contains(event.target)) {
-      setIsOpenComment(false);
+
+  const handleClickOutsideComment = (e) => {
+    if (commentRef.current && !commentRef.current.contains(e.target)) {
+      
+        setIsOpenComment(false);
+      
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutsideComment);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideComment);
     };
   }, []);
-  let  comments = post.comments
+
+
+  const isMyComment = (whoCommentId) => {
+    const userid = currentUser.user._id;
+    if (whoCommentId._id === userid) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4001/api/posts/${postId}/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("error");
+        throw new Error("Failed to delete the Comment");
+      }
+      if (response.ok){
+        toast({
+          title: 'Comment has been deleted.',
+          description: "Your Comment has been deleted successfuly.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+
+    } catch (error) {
+      console.error("Error deleting the Comment:", error);
+    }
+  };
+
+  let comments = post.comments;
   return (
     <>
       <button
@@ -36,10 +86,7 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
       >
         Hide Comments
       </button>
-      <div
-        className="items-center justify-center flex flex-row border border-t-3 border-t-gray2 rounded-md p-1 pb-2 bg-silver  "
-        
-      >
+      <div className="items-center justify-center flex flex-row border border-t-3 border-t-gray2 rounded-md p-1 pb-2 bg-silver  ">
         <div className="w-full overflow-y-auto max-h-6" style={scrollbarStyles}>
           <div className="flex flex-col gap-0.5 pl-1.15 pr-1.15">
             {comments.map((comment) => (
@@ -59,19 +106,21 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
                       </div>
                       <div className="ml-1">
                         <p className="font-semibold ">
-                          {comment.userId.firstName}{` `}
+                          {comment.userId.firstName}
+                          {` `}
                           {comment.userId.lastName}
                         </p>
                       </div>
                     </div>
-                    <div ref={commentRef} className="relative">
-                      <button
+                    {isMyComment(comment.userId) && (
+                      <div ref={commentRef} className="relative">
+                        <button
                           className="text-2xl focus:outline-none"
                           onClick={toggle}
                         >
                           <CiMenuKebab size={25} />
-                      </button>
-                      {isOpenComment && (
+                        </button>
+                        {isOpenComment && (
                           <ul className="menu absolute right-0 mt-1.25 w-68 bg-white border-3 border-gray2 rounded-mdd shadow-lg z-10">
                             <li
                               className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
@@ -81,16 +130,19 @@ const CommentsComponent = ({ post,buffer, onClose }) => {
                             </li>
                             <li
                               className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
-                              //onClick={handleDelete}
+                              onClick={()=>handleDeleteComment(comment._id)}
                             >
                               Delete
                             </li>
                           </ul>
-                      )}
-                    </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div className="mt-1">
-                    <p className="text-gray-700  border-t-3 border-t-gray2  pt-1.5 pb-1">{comment.text}</p>
+                    <p className="text-gray-700  border-t-3 border-t-gray2  pt-1.5 pb-1">
+                      {comment.text}
+                    </p>
                     <p className="text-gray-500 text-xs">{comment.createdAt}</p>
                   </div>
                 </div>

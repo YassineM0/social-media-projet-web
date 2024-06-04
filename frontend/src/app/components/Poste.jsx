@@ -114,11 +114,6 @@ const Poste = ({
           isClosable: true,
         });
       }
-
-      if (onDelete) {
-        onDelete(postId);
-        
-      }
     } catch (error) {
       console.error("Error deleting the post:", error);
     }
@@ -319,6 +314,9 @@ const Poste = ({
               onClose={handleCloseComments}
               post={post}
               buffer={buffer}
+              currentUser={currentUser}
+              postId={postId}
+              token={token}
             />
           )}
         </div>
