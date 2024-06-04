@@ -14,6 +14,9 @@ const Poste = ({
   setLikes,
   post,
   commentList,
+  currentUser,
+  buffer,
+  curentUserProfil,
   src
 }) => {
   const toast = useToast();
@@ -24,16 +27,11 @@ const Poste = ({
   const [comments, setComments] = useState(commentList || []);
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState(false);
-  setLikes(Object.keys(post.likes).length)
   const menuRef = useRef(null);
 
-  const bufferToBase64 = (buffer) => {
-    const base64String = Buffer.from(buffer).toString("base64");
-    return `data:image/jpeg;base64,${base64String}`;
-  };
-
-  const imgProfile = profilePic ? bufferToBase64(profilePic) : "";
-  const imgPost = src.data ? bufferToBase64(src.data) : "";
+  
+  const imgProfile = profilePic ? buffer(profilePic) : "";
+  const imgPost = src.data ? buffer(src.data) : "";
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -292,7 +290,7 @@ const Poste = ({
           <div className=" flex-row mb-1 flex justify-between">
             <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
               <img
-                src={imgProfile}
+                src={curentUserProfil}
                 alt=""
                 className="object-center"
               />
@@ -320,7 +318,7 @@ const Poste = ({
               comments={comments}
               onClose={handleCloseComments}
               post={post}
-              buffer={bufferToBase64}
+              buffer={buffer}
             />
           )}
         </div>

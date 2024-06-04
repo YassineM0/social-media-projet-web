@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useAuthContext } from "../context/authContext";
 import { useToast } from "@chakra-ui/react";
 
-const PostFeature = () => {
+const PostFeature = ({curentUserProfil, buffer}) => {
   const { userId, token } = useAuthContext();
   const [image, selectedImage] = useState(null);
   const [description, setDescription] = useState("");
   const toast = useToast();
+
+  
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     selectedImage(file);
@@ -59,7 +61,7 @@ const PostFeature = () => {
     <div className="border-3 w-full max-w-10 border-gray2 max-h-4 mt-1.5 rounded-mdd bg-white mb-1">
       <div className="flex flex-row items-center p-2 border-b-2 justify-between">
         <div className="w-[5%]">
-          <img src="/gilfoyl.png" alt="" className=" size-1 rounded-lg" />  
+          <img src={curentUserProfil} alt="" className=" size-1 rounded-lg" />  
         </div>
         <input
           type="text"

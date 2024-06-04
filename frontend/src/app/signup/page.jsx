@@ -38,31 +38,33 @@ const page = () => {
       });
       return;
     }
-
     const formData = new FormData();
+    if (picture) {
+      formData.append("profilePicture", picture);
+    } else {
+      toast({
+        title: "No profile picture selected",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("profilePicture", picture);
-    formData.append("dateOfBirth", 2004); // 2004 is just an example, because this field is obligatory to be filled 
+    //formData.append("profilePicture", picture);
+    formData.append("dateOfBirth", 2004); // 2004 is just an example, because this field is obligatory to be filled
 
     try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
 
       const response = await fetch("http://localhost:4001/api/auth/register", {
         method: "POST",
-        formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        body: formData,
       });
       const data = await response.json();
-
       toast({
         title: "Rgistration Successful",
         status: "success",
@@ -73,9 +75,8 @@ const page = () => {
 
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      router.push("accueil");
+      router.push('/');
     } catch (error) {
-
       if (error.response) {
         const { data } = error.response;
         toast({
@@ -104,13 +105,12 @@ const page = () => {
       }
     }
   };
-
   return (
     <div
       className="relative bg-cover bg-center h-screen w-screen flex justify-center item-center "
       style={{ backgroundImage: "url('zlijj.png')" }}
     >
-      <div className="flex m-auto justify-center items-center h-8 gap-3 bg-white border-gray2 border-3 w-xx  rounded-llg shadow-lg p-2.15">
+      <div className="flex m-auto justify-center items-center max-h-9 gap-3 bg-white border-gray2 border-3 w-xx  rounded-llg shadow-lg p-2.15">
         <div className="flex flex-col">
           <Image
             src="/AtlasNet.png"
@@ -167,10 +167,11 @@ const page = () => {
           />
           <button
             onClick={submitHandler}
-            className="border-2 rounded-mdd py-1.5 mt-1.5 hover:border-darkBlue hover:bg-blue hover:text-white hover:font-bold gap-2"
+            className="border-2 rounded-mdd py-1.5 mt-1.5 transition duration-300 ease-in-out transform hover:scale-105 hover:bg-blue hover:text-white hover:font-bold gap-2"
           >
             Sign Up
           </button>
+          <div className="text-center mt-2">Already registred?  <button className="bg-blue hover:bg-darkBlue text-white font-bold pl-2 pr-2 py-1 border-2 rounded-mdd  transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:shadow-outline" onClick={ () => router.push('/') } >Sign In</button>  </div>
         </div>
       </div>
     </div>

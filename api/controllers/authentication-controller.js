@@ -80,15 +80,16 @@ const register = asyncHandler(async (req, res) => {
  * @access  public
  */
 const login = asyncHandler(async (req, res) => {
-  const { error } = validateLoginUser(req.body);
-  if (error) {
-    return res.status(400).json(error.details[0].message);
-  }
   const user = await User.findOne({ email: req.body.email }) ;
+  if(!req.body.email){
+    res.status(400).json({message:"Email sould not be empty"})
+  }
   if (!user) {
     return res.status(400).json({ message: "invalid Email" });
   }
-
+  if (!req.body.password){
+    res.status(400).json({message:"Password sould not be empty"})
+  }
   const isPasswordMatch = await bcrypt.compare(
     req.body.password,
     user.password

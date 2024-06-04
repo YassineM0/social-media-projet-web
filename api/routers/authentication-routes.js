@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // api/auth/register
-router.post("/register", upload.single('image'),register);
+router.post("/register", upload.single('profilePicture'),register);
 
 // api/auth/login
 router.post("/login", login)
