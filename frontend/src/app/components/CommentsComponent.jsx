@@ -13,7 +13,7 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
   };
   const commentRef = useRef(null);
   const [isOpenComment, setIsOpenComment] = useState(false);
-
+  
   const toast = useToast();
   
   const toggle = () => {

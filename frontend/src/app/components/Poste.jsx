@@ -3,6 +3,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { useAuthContext } from "../context/authContext";
 import CommentsComponent from "./CommentsComponent";
 import { useToast } from "@chakra-ui/react";
+import '../globals.css';
 
 const Poste = ({
   postId,
@@ -17,7 +18,7 @@ const Poste = ({
   currentUser,
   buffer,
   curentUserProfil,
-  src
+  src,
 }) => {
   const toast = useToast();
   const { token, userId } = useAuthContext();
@@ -29,12 +30,17 @@ const Poste = ({
   const [showComments, setShowComments] = useState(false);
   const menuRef = useRef(null);
 
-  
   const imgProfile = profilePic ? buffer(profilePic) : "";
   const imgPost = src.data ? buffer(src.data) : "";
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -71,11 +77,11 @@ const Poste = ({
         throw new Error("Failed to update the post");
       }
 
-      if (response.ok){
+      if (response.ok) {
         toast({
-          title: 'Post has been Updated.',
+          title: "Post has been Updated.",
           description: "Your Post has been updated successfuly.",
-          status: 'success',
+          status: "success",
           duration: 9000,
           isClosable: true,
         });
@@ -105,11 +111,11 @@ const Poste = ({
       if (!response.ok) {
         throw new Error("Failed to delete the post");
       }
-      if (response.ok){
+      if (response.ok) {
         toast({
-          title: 'Post has been deleted.',
+          title: "Post has been deleted.",
           description: "Your Post has been deleted successfuly.",
-          status: 'error',
+          status: "error",
           duration: 9000,
           isClosable: true,
         });
@@ -133,26 +139,25 @@ const Poste = ({
       );
       if (!response.ok) {
         toast({
-          title: 'Failed to add your comment.',
-          status: 'error',
+          title: "Failed to add your comment.",
+          status: "error",
           duration: 9000,
           isClosable: true,
         });
         throw new Error("Failed to add comment");
       }
-      if (response.ok){
+      if (response.ok) {
         toast({
-          title: 'Comment has been Aded.',
-          status: 'success',
+          title: "Comment has been Aded.",
+          status: "success",
           duration: 9000,
           isClosable: true,
         });
         console.log(comments);
         const data = await response.json();
-        setComments([...comments,data.newComment]);
+        setComments([...comments, data.newComment]);
         setNewComment("");
       }
-
     } catch (error) {
       console.error("Error adding comment:", error);
     }
@@ -173,19 +178,17 @@ const Poste = ({
       if (!response.ok) {
         throw new Error("Failed to like the post");
       }
-      if (response.ok){
+      if (response.ok) {
         const data = await response.json();
         setLikes(likes);
         toast({
           title: `${data.message}`,
-          status: 'info',
+          status: "info",
           duration: 9000,
           isClosable: true,
-          position: 'bottom-left',
+          position: "bottom-left",
         });
-
       }
-      
     } catch (error) {
       console.error("Error liking the post:", error);
     }
@@ -199,16 +202,16 @@ const Poste = ({
   };
 
   return (
-    <div className="flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-full max-w-10 overflow-hidden">
+    <div
+      className={`flex flex-col border-3 border-gray2 rounded-mdd bg-white mb-1.5 w-full max-w-10 overflow-hidden transform transition-all duration-700 ease-in-out ${
+        loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+      }`}
+    >
       <div className=" flex-row pt-1 pb-1 pl-2 bg-gray2 flex justify-between  items-center">
         <div className="flex items-center">
-            <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
-              <img
-                src={imgProfile}
-                alt=""
-                className="object-center w-full"
-              />
-            </div>
+          <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
+            <img src={imgProfile} alt="" className="object-center w-full" />
+          </div>
           <h6 className="text-base font-semibold ml-1">{name}</h6>
         </div>
         <div
@@ -281,14 +284,10 @@ const Poste = ({
             </div>
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className={`flex flex-col pt-1 overflow-hidden ${showComments ? 'max-h-animate' : ''}`}>
           <div className=" flex-row mb-1 flex justify-between">
             <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
-              <img
-                src={curentUserProfil}
-                alt=""
-                className="object-center"
-              />
+              <img src={curentUserProfil} alt="" className="object-center" />
             </div>
             <div className="w-[75%]">
               <input
@@ -316,8 +315,7 @@ const Poste = ({
               buffer={buffer}
               currentUser={currentUser}
               postId={postId}
-              token={token}
-            />
+              token={token}/>
           )}
         </div>
       </div>

@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes max-height-animation {
+  from {
+    max-height: 90px;
+  }
+  to {
+    max-height: 5000px;
+  }
+}
+
+.max-h-animate {
+  /*animation: max-height-animation 15s ease-out backwards;*/
+  animation: max-height-animation  3s ease-out;
+}
