@@ -65,18 +65,19 @@ const userSchema = new mongoose.Schema({
   dateOfBirth : {
     type : String,
     required : true,
+    default : "2002/01/07"
   },
   bioContent : {
     type : String,
-    default : "" 
+    default : "Hey there! let's Connect" 
   },
   location : {
     type : String,
-    default : ""
+    default : "Taourirt"
   },
   occupation : {
     type : String,
-    default : ""
+    default : "Software Engineer At AtlasNet"
   },
   isAdmin : {
     type : Boolean,
@@ -108,10 +109,10 @@ function validateRegisterUser(obj){
       }).optional().default(),
       friends : Joi.array().default([]),
       isAdmin: Joi.boolean().default(false),
-      dateOfBirth : Joi.string().required(),
-      bioContent : Joi.string().default(""),
-      location : Joi.string().default(""),
-      occupation : Joi.string().default(""),
+      dateOfBirth : Joi.string(),
+      bioContent : Joi.string(),
+      location : Joi.string(),
+      occupation : Joi.string(),
   });
   return schema.validate(obj);
 }
@@ -137,9 +138,9 @@ function validateUpdateUser(obj){
     }).optional().default(),
     friends : Joi.array().default([]),
     dateOfBirth : Joi.date(),
-    bioContent : Joi.string().default(""),
-    location : Joi.string().default(""),
-    occupation : Joi.string().default(""),
+    bioContent : Joi.string(),
+    location : Joi.string(),
+    occupation : Joi.string(),
   });
   return schema.validate(obj);
 }

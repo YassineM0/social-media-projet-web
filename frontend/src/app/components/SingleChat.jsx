@@ -18,12 +18,17 @@ import UpdateGroupChatModal from "./Diverse/UpdateGroupChatModal";
 import axios from "axios";
 import "./styles.css";
 import ScrollableChat from "./ScrollableChat";
+import io from "socket.io-client";
+
+const ENDPOINT = "http://localhost:4001";
+let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const { userInfo, selectedChat, setSelectedChat } = ChatState();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+    const [socketConnected, setSocketConnected] = useState(false);
 
   const toast = useToast();
 
@@ -46,6 +51,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
       setMessages(data);
       setLoading(false);
+      socket.emit("join chat", selectedChat._id);
+
     } catch (error) {
       toast({
         title: `Error Occured when fetching messages. ${error.response.data}`,
@@ -77,6 +84,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         );
 
         setNewMessage("");
+        socket.emit("new message", data); 
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -90,9 +98,31 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   };
 
+  
+useEffect(()=>{
+  socket= io(ENDPOINT) 
+  socket.emit("setup", userInfo.user)
+  socket.on("connection", ()=>{setSocketConnected(true)})
+}, [])
+
   useEffect(() => {
     fetchMessages();
+
+    selectedChatCompare = selectedChat
   }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        //give notification
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
 
   return (
     <>
@@ -115,7 +145,11 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 onClick={() => setSelectedChat("")}
               />
               {!selectedChat.isGroupChat ? (
-                <Text>{selectedChat.users[1].firstName}</Text>
+                <Text>
+                  {selectedChat.users[0]._id == userInfo.user._id
+                    ? selectedChat.users[1].firstName
+                    : selectedChat.users[0].firstName}
+                </Text>
               ) : (
                 <Text>{selectedChat.chatName}</Text>
               )}

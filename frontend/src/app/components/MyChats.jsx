@@ -16,6 +16,12 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
 
   const toast = useToast();
 
+    const sender = (chat) => {
+      return chat.users[0]._id == userInfo.user._id
+        ? chat.users[1].firstName
+        : chat.users[0].firstName;
+    };
+
   const fetchChats = async () => {
     const config = {
       headers: {
@@ -106,9 +112,7 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}
               >
-                <Text>
-                  {!chat.isGroupChat ? chat.users[1].firstName : chat.chatName}
-                </Text>
+                <Text>{!chat.isGroupChat ? sender(chat) : chat.chatName}</Text>
               </Box>
             ))}
           </Stack>

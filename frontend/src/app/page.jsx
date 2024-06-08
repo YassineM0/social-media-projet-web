@@ -66,7 +66,7 @@ const page = () => {
             priority
           />
           <div className="font-display text-xl text-darkBlue">
-            Welcome to Moroccan Comunity!
+            Welcome to Moroccan Community!
           </div>
         </div>
         <div className="flex flex-col gap-0.5 bg-white  ">

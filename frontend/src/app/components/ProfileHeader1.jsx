@@ -5,7 +5,7 @@ import FeedProfile from "./FeedProfile";
 import { useAuthContext } from "../context/authContext";
 import { useToast } from "@chakra-ui/react";
 
-const ProfileHeader1 = () => {
+const ProfileHeader1 = ({buffer, currentUser, curentUserProfil}) => {
   const { userId, token } = useAuthContext();
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -14,6 +14,8 @@ const ProfileHeader1 = () => {
   const [editingField, setEditingField] = useState("");
   const [fullName, setFullName] = useState("");
   const toast = useToast();
+
+  
   useEffect(() => {
     const fetchUserData = async () => {
       if (userId) {
@@ -28,17 +30,19 @@ const ProfileHeader1 = () => {
           );
           const data = await response.json();
           setUser(data);
-          setEditableData(data);
+          let {firstName, lastName,bioContent,location,occupation, dateOfBirth} = data
+          setEditableData({firstName, lastName,bioContent,location,occupation, dateOfBirth});
           setFullName(`${data.firstName} ${data.lastName}`);
+          console.log("fetch user");
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
       }
     };
-
     fetchUserData();
   }, [userId, token]);
 
+  console.log(editableData);
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
   };
@@ -55,7 +59,10 @@ const ProfileHeader1 = () => {
     }
     setIsModalOpen(false);
   };
-
+  
+  // console.log(currentUser);
+  // const {firstName, lastName,bioContent,location,occupation} = currentUser.user
+  // setEditableData({firstName, lastName,bioContent,location,occupation})
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditableData({ ...editableData, [name]: value });
@@ -71,6 +78,7 @@ const ProfileHeader1 = () => {
         firstName,
         lastName,
       };
+      console.log(updatedData);
       const response = await fetch(
         `http://localhost:4001/api/users/${userId}`,
         {
@@ -85,14 +93,17 @@ const ProfileHeader1 = () => {
       );
       if (response.ok) {
         const updatedUser = await response.json();
-        setUser(updatedUser);
-        setEditableData(updatedUser);
+        console.log("haaaa",updatedUser);
+        let {firstName, lastName,bioContent,location,occupation,dateOfBirth} = updatedUser
+        setUser({firstName, lastName,bioContent,location,occupation ,dateOfBirth});
+        setEditableData({firstName, lastName,bioContent,location,occupation,dateOfBirth});
         setFullName(`${updatedUser.firstName} ${updatedUser.lastName}`);
         setIsEditing(false);
+        console.log("editabledata",editableData);
       } else {
         const errorData = await response.json();
         console.error("Failed to save user data", errorData);
-        window.location.reload(); // à supprimer
+        
         toast({
           title: 'Profile Updated.',
           description: "Your Profile has been Updated successfully.",
@@ -102,20 +113,24 @@ const ProfileHeader1 = () => {
         });
       }
     } catch (error) {
+      console.log("editabledata",editableData);
+
       console.error("Error saving user data:", error);
     }
   };
-
+  
+  const profilePic = user.profilePicture ? buffer(user.profilePicture.data, user.profilePicture.contentType) : "default-profile-pic-url";
+  const coverPic = user.backgroundPicture ? buffer(user.backgroundPicture.data, user.backgroundPicture.contentType) : "default-cover-pic-url";
   return (
     <div className="flex flex-col w-full mx-3">
       <div className="relative h-5 w-auto mt-1.5 ">
         <img
-          src="im11.jpg"
+          src="./defaultBackground.png"
           className="w-full h-full rounded-3xl object-cover"
         />
         <div className="absolute bottom-0 right-2 translate-y-1/2 ">
           <img
-            src="tarik.png"
+            src="./tarik.png"
             className="w-4 h-4 rounded-full border-4 border-gray"
           />
         </div>
@@ -173,7 +188,7 @@ const ProfileHeader1 = () => {
             </div>
           </div>
           <div className="">
-            <FeedProfile />
+            <FeedProfile curentUserProfil={curentUserProfil} currentUser={currentUser} buffer={buffer} />
           </div>
         </div>
         <div className="flex flex-col">

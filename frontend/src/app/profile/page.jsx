@@ -10,6 +10,15 @@ import { usePostContext } from "../context/postsContext";
 import { useAuthContext } from "../context/authContext";
 
 const Page = () => {
+  const bufferToBase64 = (buffer) => {
+    const base64String = Buffer.from(buffer).toString("base64");
+    return `data:image/jpeg;base64,${base64String}`;
+  };
+
+
+  const currentUser = JSON.parse(localStorage.getItem('userInfo'))
+  let curentUserProfil = currentUser.user.profilePicture.data.data;
+  curentUserProfil= curentUserProfil ? bufferToBase64(curentUserProfil) : "";
 
   return (
     <div
@@ -20,7 +29,7 @@ const Page = () => {
         <SideBar />
       </div>
       <div className="flex ml-3.5 w-screen">
-        <ProfileHeader1 />
+        <ProfileHeader1 buffer={bufferToBase64} currentUser={currentUser} currentUserProfil={curentUserProfil} />
       </div>
     </div>
   );
