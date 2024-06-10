@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { useToast } from "@chakra-ui/react";
 
-const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }) => {
+const CommentsComponent = ({ post, buffer, onClose, currentUser, handleDeleteComment ,postId, token, setComments, setIsOpenComment, isOpenComment }) => {
   const scrollbarStyles = {
     /* Hide scrollbar for Chrome, Safari and Opera */
     scrollbarWidth: "none" /* Firefox */,
@@ -12,7 +12,7 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
     },
   };
   const commentRef = useRef(null);
-  const [isOpenComment, setIsOpenComment] = useState(false);
+  
   
   const toast = useToast();
   
@@ -22,9 +22,7 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
 
   const handleClickOutsideComment = (e) => {
     if (commentRef.current && !commentRef.current.contains(e.target)) {
-      
         setIsOpenComment(false);
-      
     }
   };
 
@@ -33,7 +31,7 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideComment);
     };
-  }, []);
+  }, [isOpenComment]);
 
 
   const isMyComment = (whoCommentId) => {
@@ -44,40 +42,10 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
       return false;
     }
   };
-
-  const handleDeleteComment = async (commentId) => {
-    try {
-      const response = await fetch(
-        `http://localhost:4001/api/posts/${postId}/${commentId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        console.log("error");
-        throw new Error("Failed to delete the Comment");
-      }
-      if (response.ok){
-        toast({
-          title: 'Comment has been deleted.',
-          description: "Your Comment has been deleted successfuly.",
-          status: 'error',
-          duration: 9000,
-          isClosable: true,
-        });
-      }
-
-    } catch (error) {
-      console.error("Error deleting the Comment:", error);
-    }
-  };
-
+  
   let comments = post.comments;
+
+
   return (
     <>
       <button
@@ -130,7 +98,7 @@ const CommentsComponent = ({ post, buffer, onClose, currentUser, postId, token }
                             </li>
                             <li
                               className="menu-item px-4 py-2 hover:bg-gray-100 hover:rounded-mdd cursor-pointer"
-                              onClick={()=>handleDeleteComment(comment._id)}
+                              onClick={()=>handleDeleteComment(comment._id, comment)}
                             >
                               Delete
                             </li>

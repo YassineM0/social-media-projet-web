@@ -4,29 +4,10 @@ import { CiSearch } from "react-icons/ci";
 import ProfileCard from "./ProfileCard";
 
 const SearchRow = ({ users }) => {
-  const rec = [
-    {
-      name: "katarina mid",
-      src: "/katarina.png",
-    },
-    {
-      name: "tarik support",
-      src: "/tarik.png",
-    },
-    {
-      name: "lux mid",
-      src: "/lux.png",
-    },
-    {
-      name: "ezreal adc",
-      src: "/ezreal.png",
-    },
-  ];
   const bufferToBase64 = (buffer) => {
     const base64String = Buffer.from(buffer).toString("base64");
     return `data:image/jpeg;base64,${base64String}`;
   };
-  console.log(users);
   return (
     <div className="mt-1.5 w-full">
       <div className="">

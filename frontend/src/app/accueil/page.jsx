@@ -35,6 +35,13 @@ const Page = () => {
   useEffect(() => {
     console.log("users::", users);
   }, [users]);
+  const bufferToBase64 = (buffer) => {
+    const base64String = Buffer.from(buffer).toString("base64");
+    return `data:image/jpeg;base64,${base64String}`;
+  };
+  const currentUser = JSON.parse(localStorage.getItem('userInfo'))
+  let curentUserProfil = currentUser.user.profilePicture.data.data;
+  curentUserProfil= curentUserProfil ? bufferToBase64(curentUserProfil) : "";
   return (
     <div
       className="bg-cover bg-center h-screen flex w-screen"
@@ -53,7 +60,7 @@ const Page = () => {
           </div>
           <div className="w-1/5 flex flex-col items-center fixed right-1 max-w-6">
             <LastColumn className="" />
-            <Profile />
+            <Profile curentUserProfil={curentUserProfil} currentUser={currentUser} />
           </div>
         </div>
       </div>

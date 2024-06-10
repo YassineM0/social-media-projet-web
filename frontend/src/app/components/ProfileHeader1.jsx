@@ -119,18 +119,18 @@ const ProfileHeader1 = ({buffer, currentUser, curentUserProfil}) => {
     }
   };
   
-  const profilePic = user.profilePicture ? buffer(user.profilePicture.data, user.profilePicture.contentType) : "default-profile-pic-url";
-  const coverPic = user.backgroundPicture ? buffer(user.backgroundPicture.data, user.backgroundPicture.contentType) : "default-cover-pic-url";
+  const profilePic =  buffer(currentUser.user.profilePicture.data, currentUser.user.profilePicture.contentType) 
+  const coverPic =   buffer(currentUser.user.backgroundPicture.data, currentUser.user.backgroundPicture.contentType) 
   return (
     <div className="flex flex-col w-full mx-3">
       <div className="relative h-5 w-auto mt-1.5 ">
         <img
-          src="./defaultBackground.png"
+          src={coverPic}
           className="w-full h-full rounded-3xl object-cover"
         />
         <div className="absolute bottom-0 right-2 translate-y-1/2 ">
           <img
-            src="./tarik.png"
+            src={profilePic}
             className="w-4 h-4 rounded-full border-4 border-gray"
           />
         </div>

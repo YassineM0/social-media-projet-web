@@ -28,8 +28,8 @@ const Poste = ({
   const [comments, setComments] = useState(commentList || []);
   const [newComment, setNewComment] = useState("");
   const [showComments, setShowComments] = useState(false);
+  const [isOpenComment, setIsOpenComment] = useState(false);
   const menuRef = useRef(null);
-
   const imgProfile = profilePic ? buffer(profilePic) : "";
   const imgPost = src.data ? buffer(src.data) : "";
   const toggleMenu = () => {
@@ -57,6 +57,7 @@ const Poste = ({
 
   const handleModify = () => {
     setIsEditing(true);
+    setIsOpen(false)
   };
 
   const handleSave = async () => {
@@ -94,6 +95,10 @@ const Poste = ({
       console.error("Error updating the post:", error);
     }
   };
+  const handleCancelEdit = async() => {
+    setIsEditing(false)
+    setDescription(post.description)
+  }
 
   const handleDelete = async () => {
     try {
@@ -107,7 +112,7 @@ const Poste = ({
           },
         }
       );
-
+    setIsOpen(false)
       if (!response.ok) {
         throw new Error("Failed to delete the post");
       }
@@ -125,7 +130,7 @@ const Poste = ({
     }
   };
   const handleAddComment = async () => {
-    try {
+      try {
       const response = await fetch(
         `http://localhost:4001/api/posts/${postId}/${userId}/comment`,
         {
@@ -136,7 +141,7 @@ const Poste = ({
           },
           body: JSON.stringify({ comment: newComment }),
         }
-      );
+        );
       if (!response.ok) {
         toast({
           title: "Failed to add your comment.",
@@ -153,13 +158,47 @@ const Poste = ({
           duration: 9000,
           isClosable: true,
         });
-        console.log(comments);
         const data = await response.json();
         setComments([...comments, data.newComment]);
         setNewComment("");
       }
     } catch (error) {
       console.error("Error adding comment:", error);
+    }
+  };
+  const handleDeleteComment = async (commentId,comment) => {
+    setIsOpenComment(false)
+    try {
+      const response = await fetch(
+        `http://localhost:4001/api/posts/${postId}/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("error");
+        throw new Error("Failed to delete the Comment");
+      }
+      if (response.ok){
+        toast({
+          title: 'Comment has been deleted.',
+          description: "Your Comment has been deleted successfuly.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        let [comment, ...rest] = comments
+        setComments([...rest])
+        console.log("llll", comment);
+      }
+
+    } catch (error) {
+      console.error("Error deleting the Comment:", error);
     }
   };
   const handleLike = async () => {
@@ -212,7 +251,10 @@ const Poste = ({
           <div className="bg-black w-1 h-1 rounded-full overflow-hidden flex justify-center items-center">
             <img src={imgProfile} alt="" className="object-center w-full" />
           </div>
-          <h6 className="text-base font-semibold ml-1">{name}</h6>
+          <div className="flex flex-col">
+            <h6 className="text-xl font-semibold ml-1">{post.userId.firstName} {post.userId.firstName}</h6>
+            <p className="font-light ml-1 text-base">{post.userId.occupation}</p>
+          </div>
         </div>
         <div
           className="menu-container relative inline-block mr-1"
@@ -247,12 +289,20 @@ const Poste = ({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <button
-              className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
-              onClick={handleSave}
-            >
-              Save
-            </button>
+            <div className="flex flex-col">
+              <button
+                className="bg-[#538DD7] text-white font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+              <button
+                className=" mt-0.5 text-black font-semibold py-1.15 px-2 h-1 rounded-mdd focus:ring-2 focus:ring-blue-500"
+                onClick={handleCancelEdit}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         ) : (
           <p className="pb-1">{description}</p>
@@ -310,12 +360,17 @@ const Poste = ({
           {showComments && (
             <CommentsComponent
               comments={comments}
+              setComments={setComments}
               onClose={handleCloseComments}
               post={post}
               buffer={buffer}
               currentUser={currentUser}
               postId={postId}
-              token={token}/>
+              token={token}
+              handleDeleteComment={handleDeleteComment}
+              setIsOpenComment={setIsOpenComment}
+              isOpenComment={isOpenComment}
+              />
           )}
         </div>
       </div>

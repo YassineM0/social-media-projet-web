@@ -183,13 +183,13 @@ const addRemoveFriend = asyncHandler( async (req,res) => {
       friend.friends = friend.friends.filter((id) => id !== user._id.toString());
       await user.save();
       await friend.save();
-      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been removed from your frind list`})
+      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been removed from your friend list`})
     } else {
       user.friends.push(friendObjectId);
       friend.friends.push(user._id);
       await user.save();
       await friend.save();
-      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been adedd to your frind list`})
+      res.status(200).json({message : `${friend.firstName} ${friend.lastName} has been adedd to your freind list`})
     }
 
   } else (
